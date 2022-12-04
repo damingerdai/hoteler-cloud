@@ -1,0 +1,28 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0.31
+    container_name: hoteler-user-mysql-8.0
+    volumes:
+      - hoteler-user-volume:/var/lib/mysql
+      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: 267552
+      MYSQL_DATABASE: users
+      MYSQL_USER: hoteler
+      MYSQL_PASSWORD: 267552
+    ports:
+      - "3306:3306"
+    command: [ 'mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci', '--default-authentication-plugin=mysql_native_password' ]
+    networks:
+      - hoteler-network
+
+volumes:
+  hoteler-user-volume:
+    external: true
+
+networks:
+  hoteler-network:
+    external: true
