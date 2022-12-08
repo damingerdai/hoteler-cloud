@@ -2,6 +2,8 @@ package org.daming.hoteler.user.api;
 
 import org.daming.hoteler.user.domain.User;
 import org.daming.hoteler.user.service.IUserService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,11 @@ public class UserController {
         user.setPassword("");
 
         return user;
+    }
+
+    @GetMapping("/{id}")
+    public User get(@PathVariable int id) {
+        return this.userService.get(id);
     }
 
     public UserController(IUserService userService) {

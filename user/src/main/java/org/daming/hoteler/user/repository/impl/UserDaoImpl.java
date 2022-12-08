@@ -59,7 +59,7 @@ public class UserDaoImpl implements IUserDao {
                 return user;
             }
             return null;
-        });
+        }, id);
     }
 
     public UserDaoImpl(JdbcTemplate jdbcTemplate) {
