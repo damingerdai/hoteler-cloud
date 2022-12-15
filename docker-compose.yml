@@ -2,15 +2,15 @@ version: '3'
 services:
   mysql:
     image: mysql:8.0.31
-    container_name: hoteler-user-mysql-8.0
+    container_name: hoteler-mysql-8.0
     volumes:
-      - hoteler-user-volume:/var/lib/mysql
-      # - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - hoteler-mysql-volume:/var/lib/mysql
+      - ./database/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
     restart: always
     environment:
       TZ: Asia/Shanghai
       MYSQL_ROOT_PASSWORD: 267552
-      MYSQL_DATABASE: users
+      MYSQL_DATABASE: hoteler
       MYSQL_USER: hoteler
       MYSQL_PASSWORD: 267552
     ports:
@@ -18,9 +18,34 @@ services:
     command: [ 'mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci', '--default-authentication-plugin=mysql_native_password' ]
     networks:
       - hoteler-network
+  nacos:
+    image: nacos/nacos-server:v2.2.0
+    container_name: nacos-2.2.0
+    privileged: true
+    environment:
+      - TZ=Asia/Shanghai
+      - MODE=standalone
+      - SPRING_DATASOURCE_PLATFORM=mysql
+      - MYSQL_SERVICE_HOST=mysql
+      - MYSQL_SERVICE_PORT=3306
+      - MYSQL_SERVICE_USER=root
+      - MYSQL_SERVICE_PASSWORD=267552
+      - MYSQL_SERVICE_DB_NAME=nacos
+      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=10000&socketTimeout=3000&autoReconnect=true&useSSL=false&serverTimezone=UTC
+      - JVM_XMS=128m
+      - JVM_XMX=128m
+      - JVM_XMN=128m
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9849:9849"
+    depends_on:
+      - mysql
+    networks:
+      - hoteler-network
 
 volumes:
-  hoteler-user-volume:
+  hoteler-mysql-volume:
     external: true
 
 networks:

@@ -10,14 +10,20 @@ create docker network
 docker network create hoteler-network 
 ```
 
-create docker volume for `user service`
+create docker volume for `mysql`
 
 ```shell
-docker volume create --name=hoteler-user-volume 
+docker volume create --name=hoteler-mysql-volume 
 ```
 
 pull docker image
 
 ```shell
 docker-compose pull
+```
+
+run service
+
+```shell
+docker-compose up
 ```
