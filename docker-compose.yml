@@ -18,6 +18,19 @@ services:
     command: [ 'mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci', '--default-authentication-plugin=mysql_native_password' ]
     networks:
       - hoteler-network
+
+  postgres:
+    image: postgres:15
+    container_name: hoteler-postgres-15.0
+    ports:
+      - 5432:5432
+    volumes:
+      - hoteler-postgres-volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: hoteler
+
   nacos:
     image: nacos/nacos-server:v2.2.0
     container_name: nacos-2.2.0
@@ -46,6 +59,8 @@ services:
 
 volumes:
   hoteler-mysql-volume:
+    external: true
+  hoteler-postgres-volume:
     external: true
 
 networks:

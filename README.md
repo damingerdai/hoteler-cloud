@@ -10,10 +10,12 @@ create docker network
 docker network create hoteler-network 
 ```
 
-create docker volume for `mysql`
+create docker volume for `mysql`, `postgres`
 
 ```shell
-docker volume create --name=hoteler-mysql-volume 
+docker volume create --name=hoteler-mysql-volume
+
+docker volume create --name=hoteler-postgres-volume
 ```
 
 pull docker image
