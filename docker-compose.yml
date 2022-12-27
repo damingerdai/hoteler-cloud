@@ -30,6 +30,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: hoteler
+    networks:
+      - hoteler-network
 
   nacos:
     image: nacos/nacos-server:v2.2.0
