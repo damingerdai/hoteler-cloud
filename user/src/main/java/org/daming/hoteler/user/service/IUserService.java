@@ -11,4 +11,6 @@ public interface IUserService {
     int create(User user);
 
     User get(int id);
+
+    //User getUserByUsername(String username);
 }
