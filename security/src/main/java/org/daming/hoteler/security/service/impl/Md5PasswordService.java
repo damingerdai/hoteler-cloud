@@ -2,6 +2,7 @@ package org.daming.hoteler.security.service.impl;
 
 import org.daming.hoteler.common.exceptions.HotelerException;
 import org.daming.hoteler.security.service.IPasswordService;
+import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -11,6 +12,7 @@ import java.security.NoSuchAlgorithmException;
  * MD5(Message Digest Algorithm)加密算法
  * 是一种单向加密算法，只能加密不能解密
  */
+@Service("md5PasswordService")
 public class Md5PasswordService implements IPasswordService {
 
     private static String ALGORITHM = "md5";

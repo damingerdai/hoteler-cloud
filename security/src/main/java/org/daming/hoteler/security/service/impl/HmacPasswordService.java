@@ -2,6 +2,7 @@ package org.daming.hoteler.security.service.impl;
 
 import org.daming.hoteler.common.exceptions.HotelerException;
 import org.daming.hoteler.security.service.IPasswordService;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
@@ -13,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * HMAC(Hash Message Authentication Code，散列消息鉴别码)
  */
+@Service("hmacPasswordService")
 public class HmacPasswordService implements IPasswordService {
 
     private static final String ALGORITHM = "HMAC";

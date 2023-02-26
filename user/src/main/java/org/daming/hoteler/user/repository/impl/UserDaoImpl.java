@@ -56,10 +56,30 @@ public class UserDaoImpl implements IUserDao {
                 user.setUsername(rse.getString("username"));
                 user.setFirstName(rse.getString("first_name"));
                 user.setLastName(rse.getString("last_name"));
+                user.setPassword(rse.getString("password"));
+                user.setPasswordType(rse.getString("password_type"));
                 return user;
             }
             return null;
         }, id);
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        var statement = "SELECT id, username, first_name, last_name, password, password_type FROM users WHERE username = ?";
+        return this.jdbcTemplate.query(statement, (rse) -> {
+            while (rse.next()) {
+                var user = new User();
+                user.setId(rse.getInt("id"));
+                user.setUsername(rse.getString("username"));
+                user.setFirstName(rse.getString("first_name"));
+                user.setLastName(rse.getString("last_name"));
+                user.setPassword(rse.getString("password"));
+                user.setPasswordType(rse.getString("password_type"));
+                return user;
+            }
+            return null;
+        }, username);
     }
 
     public UserDaoImpl(JdbcTemplate jdbcTemplate) {

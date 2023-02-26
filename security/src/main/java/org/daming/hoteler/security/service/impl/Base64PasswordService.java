@@ -2,6 +2,7 @@ package org.daming.hoteler.security.service.impl;
 
 import org.daming.hoteler.common.exceptions.HotelerException;
 import org.daming.hoteler.security.service.IPasswordService;
+import org.springframework.stereotype.Service;
 
 import java.util.Base64;
 
@@ -9,6 +10,7 @@ import java.util.Base64;
  *  BASE64进行加密/解密
  *  通常用作对二进制数据进行加密
  */
+@Service("base64PasswordService")
 public class Base64PasswordService implements IPasswordService {
 
     /**

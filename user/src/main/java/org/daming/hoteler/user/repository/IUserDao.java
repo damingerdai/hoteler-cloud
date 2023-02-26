@@ -11,4 +11,6 @@ public interface IUserDao {
     int create(User user);
 
     User get(int id);
+
+    User getUserByUsername(String username);
 }

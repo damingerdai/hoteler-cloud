@@ -26,6 +26,11 @@ public class UserServiceImpl implements IUserService {
         return this.userDao.get(id);
     }
 
+    @Override
+    public User getUserByUsername(String username) {
+        return this.userDao.getUserByUsername(username);
+    }
+
     public UserServiceImpl(IUserDao userDao) {
         this.userDao = userDao;
     }

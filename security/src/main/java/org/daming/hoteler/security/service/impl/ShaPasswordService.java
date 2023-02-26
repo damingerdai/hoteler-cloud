@@ -2,6 +2,7 @@ package org.daming.hoteler.security.service.impl;
 
 import org.daming.hoteler.common.exceptions.HotelerException;
 import org.daming.hoteler.security.service.IPasswordService;
+import org.springframework.stereotype.Service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -10,6 +11,7 @@ import java.security.NoSuchAlgorithmException;
  * SHA(Secure Hash Algorithm，安全散列算法)
  * 数字签名等密码学应用中重要的工具，被广泛地应用于电子商务等信息安全领域
  */
+@Service("shaPasswordService")
 public class ShaPasswordService implements IPasswordService {
 
     private static final String ALGORITHM = "SHA";

@@ -2,7 +2,9 @@ package org.daming.hoteler.security.service.impl;
 
 import org.daming.hoteler.common.exceptions.HotelerException;
 import org.daming.hoteler.security.service.IPasswordService;
+import org.springframework.stereotype.Service;
 
+@Service("noopPasswordService")
 public class NoopPasswordService implements IPasswordService {
 
     @Override

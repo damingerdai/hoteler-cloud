@@ -2,6 +2,7 @@ package org.daming.hoteler.security.service.impl;
 
 import org.daming.hoteler.common.exceptions.HotelerException;
 import org.daming.hoteler.security.service.IPasswordService;
+import org.springframework.stereotype.Service;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -20,6 +21,7 @@ import java.util.Base64;
  * 数据加密标准算法,和BASE64最明显的区别就是有一个工作密钥，该密钥既用于加密、也用于解密，并且要求密钥是一个长度至少大于8位的字符串
  * 本实现可能存在错误，但是确认是可逆
  */
+@Service("desPasswordService")
 public class DESPasswordService implements IPasswordService {
 
     private static String CHARSETNAME = "UTF-8";

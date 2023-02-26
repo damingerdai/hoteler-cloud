@@ -16,3 +16,6 @@ spring:
     enabled: false
     baseline-on-migrate: true
     clean-on-validation-error: true
+secret:
+  salt: dc513dcf1de6941978deb973fe98c1f6
+  key: damingerdai

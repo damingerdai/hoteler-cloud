@@ -12,5 +12,5 @@ public interface IUserService {
 
     User get(int id);
 
-    //User getUserByUsername(String username);
+    User getUserByUsername(String username);
 }
