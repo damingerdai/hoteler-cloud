@@ -1,0 +1,33 @@
+package org.daming.hoteler.room.repository;
+
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+import org.daming.hoteler.room.pojo.Room;
+import org.daming.hoteler.room.pojo.enums.RoomStatus;
+
+/**
+ * @author daming
+ * @version 2023-04-08 11:16
+ **/
+@Mapper
+public interface RoomMapper {
+
+    @Select("insert into rooms (name, price, status, create_dt, create_user, update_dt, update_user) values (#{name}, #{price}, #{status, typeHandler=org.daming.hoteler.room.pojo.handler.RoomStatusTypeHandler}, statement_timestamp(),'system', statement_timestamp(), 'system') returning id")
+    String create(Room room);
+
+    @Delete("update rooms set update_dt = statement_timestamp(), update_user = 'system', deleted_at = statement_timestamp() where id = #{id}")
+    void delete(String id);
+
+    @Select("select id, name, price, status where id = #{id} and deleted_at is null")
+    Room get(String id);
+
+    @Update("update rooms set name = #{name}, price = #{price}, status = #{status, typeHandler=org.daming.hoteler.room.pojo.handler.RoomStatusTypeHandler}, update_dt = statement_timestamp(), update_user = 'system' where id = #{id}")
+    void update(Room room);
+
+    @Update("update rooms set status = #{status, typeHandler=org.daming.hoteler.room.pojo.handler.RoomStatusTypeHandler}, update_dt = statement_timestamp(), update_user = 'system' where id = #{id}")
+    void updateStatus(@Param("id") String id, @Param("status") RoomStatus status);
+}

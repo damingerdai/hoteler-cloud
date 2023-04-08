@@ -23,7 +23,8 @@
         <spring-cloud.version>2021.0.4</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
         <spring-boot-admin.version>2.7.5</spring-boot-admin.version>
-        <spring-boot.mybatis>2.2.2</spring-boot.mybatis>
+        <spring-boot.mybatis.version>2.3.0</spring-boot.mybatis.version>
+        <springdoc.version>1.7.0</springdoc.version>
     </properties>
 
     <modules>
@@ -62,7 +63,12 @@
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${spring-boot.mybatis}</version>
+                <version>${spring-boot.mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${springdoc.version}</version>
             </dependency>
 
             <dependency>
