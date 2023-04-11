@@ -1,9 +1,9 @@
-package org.daming.hoteler.room.pojo.handler;
+package  org.daming.hoteler.workflow.pojo.handler;
 
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
 import org.apache.ibatis.type.TypeHandler;
-import org.daming.hoteler.room.pojo.enums.RoomStatus;
+import  org.daming.hoteler.workflow.pojo.enums.RoomStatus;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;

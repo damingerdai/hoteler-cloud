@@ -29,7 +29,7 @@
 
     <modules>
         <module>auth</module>
-        <module>room</module>
+        <module>workflow</module>
         <module>security</module>
         <module>common</module>
     </modules>

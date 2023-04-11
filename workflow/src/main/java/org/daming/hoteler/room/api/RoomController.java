@@ -1,9 +1,9 @@
-package org.daming.hoteler.room.api;
+package  org.daming.hoteler.workflow.api;
 
-import org.daming.hoteler.room.pojo.Room;
-import org.daming.hoteler.room.pojo.enums.RoomStatus;
-import org.daming.hoteler.room.pojo.request.CreateRoomRequest;
-import org.daming.hoteler.room.service.IRoomService;
+import  org.daming.hoteler.workflow.pojo.Room;
+import  org.daming.hoteler.workflow.pojo.enums.RoomStatus;
+import  org.daming.hoteler.workflow.pojo.request.CreateRoomRequest;
+import  org.daming.hoteler.workflow.service.IRoomService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

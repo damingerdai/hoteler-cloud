@@ -1,4 +1,4 @@
-package org.daming.hoteler.room.pojo.request;
+package  org.daming.hoteler.workflow.pojo.request;
 
 import java.io.Serializable;
 import java.util.StringJoiner;
