@@ -1,4 +1,4 @@
-package org.daming.hoteler.room.pojo.enums;
+package  org.daming.hoteler.workflow.pojo.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFormat;

@@ -1,8 +1,8 @@
-package org.daming.hoteler.room.service;
+package  org.daming.hoteler.workflow.service;
 
 import org.daming.hoteler.common.exceptions.HotelerException;
-import org.daming.hoteler.room.pojo.Room;
-import org.daming.hoteler.room.pojo.enums.RoomStatus;
+import  org.daming.hoteler.workflow.pojo.Room;
+import  org.daming.hoteler.workflow.pojo.enums.RoomStatus;
 
 import java.util.List;
 

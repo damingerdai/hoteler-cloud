@@ -1,7 +1,7 @@
-package org.daming.hoteler.room.pojo;
+package  org.daming.hoteler.workflow.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.daming.hoteler.room.pojo.enums.RoomStatus;
+import  org.daming.hoteler.workflow.pojo.enums.RoomStatus;
 
 import java.io.Serializable;
 import java.util.StringJoiner;

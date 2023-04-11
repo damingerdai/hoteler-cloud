@@ -1,10 +1,10 @@
-package org.daming.hoteler.room.service.impl;
+package  org.daming.hoteler.workflow.service.impl;
 
 import org.daming.hoteler.common.exceptions.HotelerException;
-import org.daming.hoteler.room.pojo.Room;
-import org.daming.hoteler.room.pojo.enums.RoomStatus;
-import org.daming.hoteler.room.repository.RoomMapper;
-import org.daming.hoteler.room.service.IRoomService;
+import  org.daming.hoteler.workflow.pojo.Room;
+import  org.daming.hoteler.workflow.pojo.enums.RoomStatus;
+import  org.daming.hoteler.workflow.repository.RoomMapper;
+import  org.daming.hoteler.workflow.service.IRoomService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
