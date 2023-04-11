@@ -28,7 +28,7 @@
     </properties>
 
     <modules>
-        <module>user</module>
+        <module>auth</module>
         <module>room</module>
         <module>security</module>
         <module>common</module>
