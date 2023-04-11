@@ -12,7 +12,6 @@ env:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-    needs: [ build ]
     strategy:
       matrix:
         java-version: [ 17 ]
