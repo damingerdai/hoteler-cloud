@@ -29,17 +29,14 @@ public class UserDaoImpl implements IUserDao {
             INSERT INTO users
                (username, first_name, last_name, password, password_type, create_dt, create_user, update_dt, update_user)
             VALUES (?, ?, ?, ?, ?, now(),'system', now(), 'system')""";
-        this.jdbcTemplate.update(new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-                var ps = con.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
-                ps.setString(1, user.getUsername());
-                ps.setString(2, user.getFirstName());
-                ps.setString(3, user.getLastName());
-                ps.setString(4, user.getPassword());
-                ps.setString(5, user.getPasswordType());
-                return ps;
-            }
+        this.jdbcTemplate.update(con -> {
+            var ps = con.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getFirstName());
+            ps.setString(3, user.getLastName());
+            ps.setString(4, user.getPassword());
+            ps.setString(5, user.getPasswordType());
+            return ps;
         }, keyHolder);
         var id = Objects.requireNonNull(keyHolder.getKey()).intValue();
         user.setId(id);
