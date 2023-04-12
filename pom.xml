@@ -30,12 +30,19 @@
     <modules>
         <module>auth</module>
         <module>workflow</module>
-        <module>security</module>
         <module>common</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.daming</groupId>
+                <artifactId>hoteler.common.bom</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
