@@ -13,6 +13,8 @@ import  org.daming.hoteler.workflow.pojo.Room;
 import  org.daming.hoteler.workflow.pojo.enums.RoomStatus;
 import  org.daming.hoteler.workflow.pojo.handler.RoomStatusTypeHandler;
 
+import java.util.List;
+
 /**
  * @author daming
  * @version 2023-04-08 11:16
@@ -43,6 +45,15 @@ public interface RoomMapper {
             @Result(column = "status", property = "status", typeHandler = RoomStatusTypeHandler.class)
     })
     Room getByName(String name);
+
+    @Select("select id, name, price, status from rooms where deleted_at is null")
+    @Results({
+            @Result(id = true, column = "id", property = "id"),
+            @Result(column = "name", property = "name"),
+            @Result(column = "price", property = "price"),
+            @Result(column = "status", property = "status", typeHandler = RoomStatusTypeHandler.class)
+    })
+    List<Room> list();
 
     @Update("update rooms set name = #{name}, price = #{price}, status = #{status, typeHandler= org.daming.hoteler.workflow.pojo.handler.RoomStatusTypeHandler}, update_dt = statement_timestamp(), update_user = 'system' where id = #{id}")
     void update(Room room);

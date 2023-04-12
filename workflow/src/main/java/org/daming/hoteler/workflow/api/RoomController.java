@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author daming
  * @version 2023-04-08 14:05
@@ -32,10 +34,15 @@ public class RoomController {
 
     @GetMapping(path = "room/{id}")
     public Room getRoom(@PathVariable String id) {
-        System.out.println(id);
         var room = this.roomService.get(id);
 
         return room;
+    }
+
+    @GetMapping(path = "rooms")
+    public List<Room> listRoom() {
+        var rooms = this.roomService.list();
+        return rooms;
     }
 
     public RoomController(IRoomService roomService) {

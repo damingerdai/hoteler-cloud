@@ -46,8 +46,7 @@ public class RoomServiceImpl implements IRoomService {
 
     @Override
     public List<Room> list() throws HotelerException {
-        //
-        throw new RuntimeException("尚未实现");
+        return this.roomMapper.list();
     }
 
     @Override
