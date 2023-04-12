@@ -69,11 +69,11 @@
 
         <dependency>
             <groupId>org.daming</groupId>
-            <artifactId>hoteler.common</artifactId>
+            <artifactId>hoteler.common.core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.daming</groupId>
-            <artifactId>hoteler.security</artifactId>
+            <artifactId>hoteler.common.security</artifactId>
         </dependency>
     </dependencies>
 

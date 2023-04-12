@@ -30,12 +30,19 @@
     <modules>
         <module>auth</module>
         <module>workflow</module>
-        <module>security</module>
         <module>common</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.daming</groupId>
+                <artifactId>hoteler.common.bom</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -70,17 +77,6 @@
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>${springdoc.version}</version>
             </dependency>
-
-            <dependency>
-                <groupId>org.daming</groupId>
-                <artifactId>hoteler.common</artifactId>
-                <version>${hoteler.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.daming</groupId>
-                <artifactId>hoteler.security</artifactId>
-                <version>${hoteler.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -89,11 +85,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>jakarta.annotation</groupId>-->
-<!--            <artifactId>jakarta.annotation-api</artifactId>-->
-<!--            <version>2.1.1</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>javax.annotation</groupId>
             <artifactId>javax.annotation-api</artifactId>
