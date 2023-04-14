@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public Customer get(String id) throws HotelerException {
-        return null;
+        return this.customerMapper.get(id);
     }
 
     @Override

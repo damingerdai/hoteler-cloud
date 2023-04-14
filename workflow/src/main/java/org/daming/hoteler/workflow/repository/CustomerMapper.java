@@ -19,4 +19,9 @@ public interface CustomerMapper {
         RETURNING id
      """)
     String create(Customer customer) throws HotelerException;
+
+    @Select("""
+            SELECT id, name, gender, card_id as cardId, phone FROM customers WHERE id = #{id}::uuid and deleted_at is null
+            """)
+    Customer get(String id) throws HotelerException;
 }
