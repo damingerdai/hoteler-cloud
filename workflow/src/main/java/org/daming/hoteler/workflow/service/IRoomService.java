@@ -24,5 +24,5 @@ public interface IRoomService {
 
     void delete(String id) throws HotelerException;
 
-    void updateStatus(long id, RoomStatus status)  throws HotelerException;
+    void updateStatus(String id, RoomStatus status)  throws HotelerException;
 }

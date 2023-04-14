@@ -37,6 +37,7 @@ services:
     image: nacos/nacos-server:v2.2.0
     container_name: nacos-2.2.0
     privileged: true
+    restart: always
     environment:
       - TZ=Asia/Shanghai
       - MODE=standalone

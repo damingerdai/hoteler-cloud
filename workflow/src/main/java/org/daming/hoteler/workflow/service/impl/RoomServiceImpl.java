@@ -55,8 +55,8 @@ public class RoomServiceImpl implements IRoomService {
     }
 
     @Override
-    public void updateStatus(long id, RoomStatus status) throws HotelerException {
-
+    public void updateStatus(String id, RoomStatus status) throws HotelerException {
+        this.roomMapper.updateStatus(id, status);
     }
 
     public RoomServiceImpl(RoomMapper roomMapper) {
