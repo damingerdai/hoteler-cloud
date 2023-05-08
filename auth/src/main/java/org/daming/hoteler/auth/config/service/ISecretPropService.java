@@ -5,4 +5,6 @@ public interface ISecretPropService {
     String getSalt();
 
     String getKey();
+
+    String getPersonSalt();
 }

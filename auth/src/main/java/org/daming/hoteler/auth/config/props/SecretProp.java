@@ -13,6 +13,8 @@ public class SecretProp {
 
     private String key;
 
+    private String personSalt;
+
     public String getSalt() {
         return salt;
     }
@@ -29,6 +31,14 @@ public class SecretProp {
         this.key = key;
     }
 
+    public String getPersonSalt() {
+        return personSalt;
+    }
+
+    public void setPersonSalt(String personSalt) {
+        this.personSalt = personSalt;
+    }
+
     public SecretProp() {
         super();
     }
@@ -38,6 +48,7 @@ public class SecretProp {
         return new StringJoiner(", ", SecretProp.class.getSimpleName() + "[", "]")
                 .add("salt='" + salt + "'")
                 .add("key='" + key + "'")
+                .add("personSalt='" + personSalt + "'")
                 .toString();
     }
 }

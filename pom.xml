@@ -24,6 +24,7 @@
         <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
         <spring-boot-admin.version>2.7.5</spring-boot-admin.version>
         <spring-boot.mybatis.version>2.3.0</spring-boot.mybatis.version>
+        <hutool.version>5.8.16</hutool.version>
         <springdoc.version>1.7.0</springdoc.version>
     </properties>
 
@@ -76,6 +77,11 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>${springdoc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

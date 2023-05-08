@@ -2,7 +2,9 @@ package org.daming.hoteler.auth.service.impl;
 
 import org.daming.hoteler.auth.domain.User;
 import org.daming.hoteler.auth.repository.IUserDao;
+import org.daming.hoteler.auth.service.ICardIdService;
 import org.daming.hoteler.auth.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,6 +15,8 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements IUserService {
 
     private IUserDao userDao;
+
+    private ICardIdService cardIdService;
 
     @Override
     public int create(User user) {
@@ -29,6 +33,11 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User getUserByUsername(String username) {
         return this.userDao.getUserByUsername(username);
+    }
+
+    @Autowired
+    public void setCardIdService(ICardIdService cardIdService) {
+        this.cardIdService = cardIdService;
     }
 
     public UserServiceImpl(IUserDao userDao) {
