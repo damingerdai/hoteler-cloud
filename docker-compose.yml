@@ -20,8 +20,8 @@ services:
       - hoteler-network
 
   postgres:
-    image: postgres:15
-    container_name: hoteler-postgres-15.0
+    image: postgres:15.2
+    container_name: hoteler-postgres-15.2
     ports:
       - 5432:5432
     volumes:
@@ -30,12 +30,16 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: hoteler
+      TZ: 'GMT+8'
+      PGTZ: 'GMT+8'
     networks:
       - hoteler-network
 
   nacos:
     image: nacos/nacos-server:v2.2.0
-    container_name: nacos-2.2.0
+    # https://github.com/alibaba/nacos/issues/6340
+    # image: zhusaidong/nacos-server-m1:2.0.3
+    container_name: hoteler-nacos-2.2.0
     privileged: true
     restart: always
     environment:
@@ -48,9 +52,9 @@ services:
       - MYSQL_SERVICE_PASSWORD=267552
       - MYSQL_SERVICE_DB_NAME=nacos
       - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=10000&socketTimeout=3000&autoReconnect=true&useSSL=false&serverTimezone=UTC
-      - JVM_XMS=256m
-      - JVM_XMX=256m
-      - JVM_XMN=256m
+      - JVM_XMS=512m
+      - JVM_XMX=512m
+      - JVM_XMN=512m
     ports:
       - "8848:8848"
       - "9848:9848"

@@ -8,11 +8,13 @@ import org.daming.hoteler.auth.config.service.ISecretPropService;
 import org.daming.hoteler.auth.service.ICardIdService;
 import org.daming.hoteler.common.exceptions.HotelerException;
 import org.daming.hoteler.common.logger.LoggerManager;
+import org.springframework.stereotype.Service;
 
 /**
  * @author daming
  * @version 2023-05-07 22:52
  **/
+@Service
 public class CardIdServiceImpl implements ICardIdService {
 
     private final ISecretPropService secretPropService;

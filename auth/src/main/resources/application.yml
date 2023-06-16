@@ -20,3 +20,8 @@ secret:
   salt: dc513dcf1de6941978deb973fe98c1f6
   key: damingerdai22
   personSalt: dc513dcf1de6941978deb973fe98c1f3
+
+logging:
+  level:
+    root:
+      debug
