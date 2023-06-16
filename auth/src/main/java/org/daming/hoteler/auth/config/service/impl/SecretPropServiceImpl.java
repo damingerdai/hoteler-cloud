@@ -22,6 +22,11 @@ public class SecretPropServiceImpl implements ISecretPropService, InitializingBe
     }
 
     @Override
+    public String getPersonSalt() {
+        return this.secretProp.getPersonSalt();
+    }
+
+    @Override
     public void afterPropertiesSet() throws Exception {
         if (Objects.isNull(this.secretProp)) {
             throw new RuntimeException("secret prop error");
