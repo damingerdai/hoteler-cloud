@@ -20,6 +20,13 @@ spring:
           - Path=/api/v1/token
         filters: # 过滤器,请求在传递过程中可以通过过滤器对其进行一定的修改
           - StripPrefix=2 # 转发之前去掉1层路径
+      - id: user-route # 当前路由的id，保证唯一性
+        uri: lb://auth-service # lb指的是负载均衡，buy-service是nacos中的微服务名字
+        order: 1 #路由的优先级,数字越小级别越高
+        predicates:
+          - Path=/api/v1/user
+        filters: # 过滤器,请求在传递过程中可以通过过滤器对其进行一定的修改
+          - StripPrefix=2 # 转发之前去掉1层路径
 logging:
   level:
     root:
