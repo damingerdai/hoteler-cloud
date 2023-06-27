@@ -2,7 +2,11 @@ package org.daming.hoteler.auth.api;
 
 import org.daming.hoteler.auth.domain.UserToken;
 import org.daming.hoteler.auth.service.ITokenService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("token")

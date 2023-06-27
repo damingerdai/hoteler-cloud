@@ -27,7 +27,6 @@ public class UserServiceImpl implements IUserService {
         var encodePassword = passwordService.encodePassword(user.getPassword());
         user.setPassword(encodePassword);
         var id = this.userDao.create(user);
-        user.setId(id);
         return id;
     }
 
@@ -39,6 +38,14 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User getUserByUsername(String username) {
         return this.userDao.getUserByUsername(username);
+    }
+
+    @Override
+    public void update(User user) {
+        var passwordService = this.passwordHelperService.getPasswordService(user.getPasswordType());
+        var encodePassword = passwordService.encodePassword(user.getPassword());
+        user.setPassword(encodePassword);
+        this.userDao.update(user);
     }
 
     @Autowired

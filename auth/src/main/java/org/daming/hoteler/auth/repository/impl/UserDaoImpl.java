@@ -79,6 +79,23 @@ public class UserDaoImpl implements IUserDao {
         }, username);
     }
 
+    @Override
+    public void update(User user) {
+        var statement = """
+             update users
+             set username = ?,
+                 first_name = ?,
+                 last_name = ?,
+                 password = ?,
+                 password_type = ?,
+                 update_dt = now(),
+                 update_user = 'system'
+             where id = ?
+                 
+        """;
+        this.jdbcTemplate.update(statement, user.getUsername(), user.getFirstName(), user.getLastName(), user.getPassword(), user.getPasswordType(), user.getId());
+    }
+
     public UserDaoImpl(JdbcTemplate jdbcTemplate) {
         super();
         this.jdbcTemplate = jdbcTemplate;

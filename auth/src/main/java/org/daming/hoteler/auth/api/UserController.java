@@ -5,6 +5,7 @@ import org.daming.hoteler.auth.service.IUserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,17 @@ public class UserController {
     @GetMapping("/{id}")
     public User get(@PathVariable int id) {
         return this.userService.get(id);
+    }
+
+    @PutMapping("")
+    public User update(@RequestBody User user) {
+        this.userService.update(user);
+
+        var id  = this.userService.create(user);
+        user.setId(id);
+        user.setPassword("");
+
+        return user;
     }
 
     public UserController(IUserService userService) {
