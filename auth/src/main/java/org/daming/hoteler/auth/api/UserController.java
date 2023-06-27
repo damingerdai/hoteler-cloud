@@ -2,6 +2,8 @@ package org.daming.hoteler.auth.api;
 
 import org.daming.hoteler.auth.domain.User;
 import org.daming.hoteler.auth.service.IUserService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,6 +45,13 @@ public class UserController {
         user.setPassword("");
 
         return user;
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable int id) {
+        this.userService.delete(id);
+
+        return ResponseEntity.ok("ok");
     }
 
     public UserController(IUserService userService) {

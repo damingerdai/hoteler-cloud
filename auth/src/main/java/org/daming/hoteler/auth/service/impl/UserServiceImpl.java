@@ -48,6 +48,11 @@ public class UserServiceImpl implements IUserService {
         this.userDao.update(user);
     }
 
+    @Override
+    public void delete(int id) {
+        this.userDao.delete(id);
+    }
+
     @Autowired
     public void setCardIdService(ICardIdService cardIdService) {
         this.cardIdService = cardIdService;

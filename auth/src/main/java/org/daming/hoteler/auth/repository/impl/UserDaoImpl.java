@@ -96,6 +96,12 @@ public class UserDaoImpl implements IUserDao {
         this.jdbcTemplate.update(statement, user.getUsername(), user.getFirstName(), user.getLastName(), user.getPassword(), user.getPasswordType(), user.getId());
     }
 
+    @Override
+    public void delete(int id) {
+        var statement = "update users set deleted_at = now() where id = ?";
+        this.jdbcTemplate.update(statement, id);
+    }
+
     public UserDaoImpl(JdbcTemplate jdbcTemplate) {
         super();
         this.jdbcTemplate = jdbcTemplate;
