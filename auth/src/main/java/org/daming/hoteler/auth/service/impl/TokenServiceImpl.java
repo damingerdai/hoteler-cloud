@@ -18,6 +18,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class TokenServiceImpl implements ITokenService, ApplicationContextAware {
@@ -57,12 +58,31 @@ public class TokenServiceImpl implements ITokenService, ApplicationContextAware 
 
     @Override
     public UserToken refreshToken(String refreshToken) throws HotelerException {
-        return null;
+        var key = JwtUtil.generalKey(this.secretPropService.getKey());
+        var claim = JwtUtil.parseJwt(refreshToken, key);
+        var sub = claim.getSubject();
+        var subs = sub.split("@");
+        var userId = subs[0];
+        var username = subs[1];
+        var user = Optional.ofNullable(userService.get(Integer.parseInt(userId)))
+                .orElseThrow(() ->  new RuntimeException("no user or password error"));
+        return doCreateToken(user);
     }
 
     @Override
     public User verifyToken(String token) throws HotelerException {
-        return null;
+        var key = JwtUtil.generalKey(this.secretPropService.getKey());
+        var claim = JwtUtil.parseJwt(token, key);
+        var sub = claim.getSubject();
+        var subs = sub.split("@");
+        var userId = subs[0];
+        var username = subs[1];
+        var user = userService.get(Integer.parseInt(userId));
+        if (Objects.isNull(user)) {
+            throw new RuntimeException("no user");
+        }
+        user.setPassword("");
+        return user;
     }
 
     private IPasswordService getPasswordService(String passwordType) {
