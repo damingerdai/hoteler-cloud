@@ -32,7 +32,7 @@
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -42,7 +42,7 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.17</version>
+            <version>1.2.16</version>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -90,7 +90,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>org.daming.hoteler.auth.HotelerUserApplication</mainClass>
+                    <mainClass>org.daming.hoteler.auth.HotelerAuthApplication</mainClass>
                 </configuration>
             </plugin>
             <plugin>

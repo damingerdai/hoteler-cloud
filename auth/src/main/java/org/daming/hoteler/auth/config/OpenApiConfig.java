@@ -26,8 +26,8 @@ public class OpenApiConfig {
 
     private ExternalDocumentation externalDocumentation() {
         return new ExternalDocumentation()
-                .description("大明二代的Hoteler")
-                .url("https://github.com/damingerdai/hoteler");
+                .description("大明二代的Hoteler Cloud")
+                .url("https://github.com/damingerdai/hoteler-cloud");
     }
 
     private Info info() {
@@ -45,7 +45,7 @@ public class OpenApiConfig {
     }
 
     private Components components() {
-        return new Components()
-                .addSecuritySchemes("bearer-key", new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"));
+        return new Components();
+                //.addSecuritySchemes("bearer-key", new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"));
     }
 }

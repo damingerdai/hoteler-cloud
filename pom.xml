@@ -25,7 +25,7 @@
         <spring-boot-admin.version>2.7.5</spring-boot-admin.version>
         <spring-boot.mybatis.version>2.3.0</spring-boot.mybatis.version>
         <hutool.version>5.8.16</hutool.version>
-        <springdoc.version>1.7.0</springdoc.version>
+        <springdoc.version>2.2.0</springdoc.version>
     </properties>
 
     <modules>
@@ -74,7 +74,7 @@
             </dependency>
             <dependency>
                 <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-ui</artifactId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>${springdoc.version}</version>
             </dependency>
             <dependency>

@@ -32,7 +32,7 @@
 <!--        </dependency>-->
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
         </dependency>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -88,6 +88,7 @@
                     <url>jdbc:postgresql://127.0.0.1:5432/postgres</url>
                     <user>postgres</user>
                     <password>123456</password>
+                    <baselineOnMigrate>true</baselineOnMigrate>
                 </configuration>
             </plugin>
         </plugins>
