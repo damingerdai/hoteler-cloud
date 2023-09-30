@@ -1,5 +1,7 @@
 package org.daming.hoteler.auth.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.StringJoiner;
 
 /**
@@ -16,8 +18,10 @@ public class User {
 
     private String lastName;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String password;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String passwordType;
 
     public int getId() {

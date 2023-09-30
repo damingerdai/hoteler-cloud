@@ -26,14 +26,19 @@ public class UserController {
     public User create(@RequestBody User user) {
         var id  = this.userService.create(user);
         user.setId(id);
-        user.setPassword("");
+        user.setPassword(null);
+        user.setPasswordType(null);
 
         return user;
     }
 
     @GetMapping("/{id}")
     public User get(@PathVariable int id) {
-        return this.userService.get(id);
+        var user = this.userService.get(id);
+        user.setPassword(null);
+        user.setPasswordType(null);
+
+        return user;
     }
 
     @PutMapping("")
@@ -42,7 +47,8 @@ public class UserController {
 
         var id  = this.userService.create(user);
         user.setId(id);
-        user.setPassword("");
+        user.setPassword(null);
+        user.setPasswordType(null);
 
         return user;
     }
