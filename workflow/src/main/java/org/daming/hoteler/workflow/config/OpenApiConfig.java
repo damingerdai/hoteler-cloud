@@ -26,13 +26,13 @@ public class OpenApiConfig {
 
     private ExternalDocumentation externalDocumentation() {
         return new ExternalDocumentation()
-                .description("大明二代的Hoteler")
-                .url("https://github.com/damingerdai/hoteler");
+                .description("大明二代的Hoteler Cloud")
+                .url("https://github.com/damingerdai/hoteler-cloud");
     }
 
     private Info info() {
         return new Info()
-                .title("Hoteler Auth Open API")
+                .title("Hoteler Workflow Open API")
                 .description("大明二代")
                 .version("v0.0.1")
                 .license(license());

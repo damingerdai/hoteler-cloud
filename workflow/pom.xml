@@ -68,7 +68,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass> org.daming.hoteler.workflow.HotelerWorkflowApplication</mainClass>
+                    <mainClass>org.daming.hoteler.workflow.HotelerWorkflowApplication</mainClass>
                 </configuration>
             </plugin>
             <plugin>
