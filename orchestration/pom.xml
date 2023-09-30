@@ -34,6 +34,10 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+        </dependency>
 
         <dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -56,7 +60,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass> org.daming.hoteler.orchestration.HotelerOrchestrationApplication</mainClass>
+                    <mainClass>org.daming.hoteler.orchestration.HotelerOrchestrationApplication</mainClass>
                 </configuration>
             </plugin>
             <plugin>
