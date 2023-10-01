@@ -1,5 +1,6 @@
 package org.daming.hoteler.auth.api;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.daming.hoteler.auth.domain.User;
 import org.daming.hoteler.auth.service.IUserService;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/user")
+@Tag(name = "User Controller")
 public class UserController {
 
     private IUserService userService;
