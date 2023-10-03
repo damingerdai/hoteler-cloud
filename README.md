@@ -16,6 +16,8 @@ create docker volume for `mysql`, `postgres`
 docker volume create --name=hoteler-mysql-volume
 
 docker volume create --name=hoteler-postgres-volume
+
+docker volume create --name=hoteler-bytebase-volume
 ```
 
 pull docker image

@@ -63,11 +63,24 @@ services:
       - mysql
     networks:
       - hoteler-network
+  bytebase:
+    image: bytebase/bytebase:2.8.0
+    init: true
+    container_name: bytebase
+    restart: always
+    ports:
+      - 5678:5678
+    # # Uncomment the following lines to persist data
+    volumes:
+       - hoteler-bytebase-volume:/var/opt/bytebase
+    command: [ "--data", "/var/opt/bytebase", "--port", "5678" ]
 
 volumes:
   hoteler-mysql-volume:
     external: true
   hoteler-postgres-volume:
+    external: true
+  hoteler-bytebase-volume:
     external: true
 
 networks:
