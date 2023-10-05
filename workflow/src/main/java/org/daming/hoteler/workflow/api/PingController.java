@@ -1,5 +1,6 @@
 package  org.daming.hoteler.workflow.api;
 
+import org.daming.hoteler.workflow.service.IPingService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,8 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PingController {
 
+    private IPingService pingService;
+
     @RequestMapping(path = "ping")
     public String ping() {
-        return "pong";
+        return this.pingService.ping();
+    }
+
+    public PingController(IPingService pingService) {
+        this.pingService = pingService;
     }
 }
