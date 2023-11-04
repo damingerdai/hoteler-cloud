@@ -2,6 +2,7 @@ package org.daming.hoteler.auth.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.List;
 import java.util.StringJoiner;
 
 /**
@@ -23,6 +24,9 @@ public class User {
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String passwordType;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private List<Role> roles;
 
     public int getId() {
         return id;
@@ -72,13 +76,33 @@ public class User {
         this.passwordType = passwordType;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
     public User(int id, String username, String firstName, String lastName, String password, String passwordType) {
+        super();
         this.id = id;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.passwordType = passwordType;
+    }
+
+    public User(int id, String username, String firstName, String lastName, String password, String passwordType, List<Role> roles) {
+        super();
+        this.id = id;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.passwordType = passwordType;
+        this.roles = roles;
     }
 
     public User() {
@@ -93,6 +117,7 @@ public class User {
                 .add("lastName='" + lastName + "'")
                 .add("password='" + password + "'")
                 .add("passwordType='" + passwordType + "'")
+                .add("roles=" + roles)
                 .toString();
     }
 }

@@ -1,12 +1,15 @@
 package org.daming.hoteler.auth.service.impl;
 
 import org.daming.hoteler.auth.domain.User;
+import org.daming.hoteler.auth.repository.IRoleDao;
 import org.daming.hoteler.auth.repository.IUserDao;
 import org.daming.hoteler.auth.service.ICardIdService;
 import org.daming.hoteler.auth.service.IPasswordHelperService;
 import org.daming.hoteler.auth.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Objects;
 
 /**
  * @author gming001
@@ -16,6 +19,8 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements IUserService {
 
     private IUserDao userDao;
+
+    private IRoleDao roleDao;
 
     private ICardIdService cardIdService;
 
@@ -32,12 +37,21 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public User get(int id) {
-        return this.userDao.get(id);
+        var user = this.userDao.get(id);
+        var roles = this.roleDao.listByUserId(id);
+        user.setRoles(roles);
+        return user;
     }
 
     @Override
     public User getUserByUsername(String username) {
-        return this.userDao.getUserByUsername(username);
+        var user = this.userDao.getUserByUsername(username);
+        if (Objects.nonNull(user)) {
+            var roles = this.roleDao.listByUserId(user.getId());
+            user.setRoles(roles);
+        }
+
+        return user;
     }
 
     @Override
@@ -63,7 +77,9 @@ public class UserServiceImpl implements IUserService {
         this.passwordHelperService = passwordHelperService;
     }
 
-    public UserServiceImpl(IUserDao userDao) {
+    public UserServiceImpl(IUserDao userDao, IRoleDao roleDao) {
+        super();
         this.userDao = userDao;
+        this.roleDao =roleDao;
     }
 }

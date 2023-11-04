@@ -12,4 +12,6 @@ import java.util.List;
 public interface IRoleDao {
 
     List<Role> list() throws HotelerException;
+
+    List<Role> listByUserId(int userId) throws HotelerException;
 }

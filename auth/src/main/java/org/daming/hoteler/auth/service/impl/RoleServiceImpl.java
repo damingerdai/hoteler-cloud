@@ -22,6 +22,11 @@ public class RoleServiceImpl implements IRoleService {
         return this.roleDao.list();
     }
 
+    @Override
+    public List<Role> listByUserId(int userId) throws HotelerException {
+        return this.roleDao.listByUserId(userId);
+    }
+
     public RoleServiceImpl(IRoleDao roleDao) {
         super();
         this.roleDao = roleDao;

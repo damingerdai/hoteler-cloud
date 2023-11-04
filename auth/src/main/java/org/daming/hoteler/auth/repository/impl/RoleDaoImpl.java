@@ -6,6 +6,8 @@ import org.daming.hoteler.common.exceptions.HotelerException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -20,15 +22,27 @@ public class RoleDaoImpl implements IRoleDao {
     @Override
     public List<Role> list() throws HotelerException {
         var statement = "SELECT id, name, description FROM roles WHERE deleted_at IS NULL";
-        var roles = this.jdbcTemplate.query(statement, (rs, i) -> {
-            var role = new Role();
-            role.setId(rs.getLong("id"));
-            role.setName(rs.getString("name"));
-            role.setDescription(rs.getString("description"));
+        return this.jdbcTemplate.query(statement, this::rowsMapper);
+    }
 
-            return role;
-        });
-        return roles;
+    @Override
+    public List<Role> listByUserId(int userId) throws HotelerException {
+        var statement = """
+           SELECT r.id AS id, r.name AS name, r.description AS description FROM roles r
+           JOIN user_roles ur ON ur.role_id = r.id AND ur.user_id  = ? AND ur.deleted_at  IS NULL
+           WHERE r.deleted_at IS NULL
+        """;
+
+        return this.jdbcTemplate.query(statement, this::rowsMapper, new Object[] { userId });
+    }
+
+    private Role rowsMapper(ResultSet rs, int i) throws SQLException {
+        var role = new Role();
+        role.setId(rs.getLong("id"));
+        role.setName(rs.getString("name"));
+        role.setDescription(rs.getString("description"));
+
+        return role;
     }
 
     public RoleDaoImpl(JdbcTemplate jdbcTemplate) {
