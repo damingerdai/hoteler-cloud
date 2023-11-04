@@ -21,7 +21,7 @@ public class PasswordHelperServiceImpl implements IPasswordHelperService, Applic
     @Override
     public IPasswordService getPasswordService(String passwordType) {
         var defaultPasswordType = "noop";
-        var beanName = Objects.requireNonNull(passwordType, defaultPasswordType) + "PasswordService";
+        var beanName = Objects.requireNonNullElse(passwordType, defaultPasswordType) + "PasswordService";
         return Objects.requireNonNull(this.applicationContext).getBean(beanName, IPasswordService.class);
     }
 
