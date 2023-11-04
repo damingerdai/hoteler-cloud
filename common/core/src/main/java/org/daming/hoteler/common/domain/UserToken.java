@@ -1,11 +1,12 @@
-package org.daming.hoteler.auth.domain;
+package org.daming.hoteler.common.domain;
 
-import java.io.Serializable;
 import java.util.StringJoiner;
 
-public class UserToken implements Serializable {
-
-    private static final long serialVersionUID = 6156817161731552023L;
+/**
+ * @author gming001
+ * @version 2023-11-04 22:34
+ */
+public class UserToken {
 
     private String accessToken;
 

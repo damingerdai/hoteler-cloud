@@ -1,8 +1,8 @@
 package org.daming.hoteler.auth.service;
 
+import org.daming.hoteler.common.domain.UserToken;
 import org.daming.hoteler.common.exceptions.HotelerException;
 import org.daming.hoteler.auth.domain.User;
-import org.daming.hoteler.auth.domain.UserToken;
 
 public interface ITokenService {
 

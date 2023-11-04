@@ -2,8 +2,8 @@ package org.daming.hoteler.auth.api;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.daming.hoteler.auth.domain.User;
-import org.daming.hoteler.auth.domain.UserToken;
 import org.daming.hoteler.auth.service.ITokenService;
+import org.daming.hoteler.common.response.UserTokenResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,23 +19,22 @@ public class TokenController {
     private final ITokenService tokenService;
 
     @PostMapping("")
-    public UserToken createToken(@RequestHeader String username, @RequestHeader String password) {
+    public UserTokenResponse createToken(@RequestHeader String username, @RequestHeader String password) {
         var userToken = this.tokenService.createToken(username, password);
-        return userToken;
+        return new UserTokenResponse(userToken);
     }
 
     @PutMapping("")
-    public UserToken verifyToken(@RequestHeader String accessToken) {
+    public UserTokenResponse verifyToken(@RequestHeader String accessToken) {
         var userToken = this.tokenService.refreshToken(accessToken);
 
-        return userToken;
+        return new UserTokenResponse(userToken);
     }
 
     @GetMapping("")
     public User parseToken(@RequestHeader String accessToken) {
-        System.out.println(accessToken);
         var user = this.tokenService.verifyToken(accessToken);
-        System.out.println(user);
+
         return user;
     }
 

@@ -1,12 +1,12 @@
 package org.daming.hoteler.auth.service.impl;
 
+import org.daming.hoteler.common.domain.UserToken;
 import org.daming.hoteler.common.exceptions.HotelerException;
 import org.daming.hoteler.common.utils.CommonUtils;
 import org.daming.hoteler.common.utils.JwtUtil;
 import org.daming.hoteler.security.service.IPasswordService;
 import org.daming.hoteler.auth.config.service.ISecretPropService;
 import org.daming.hoteler.auth.domain.User;
-import org.daming.hoteler.auth.domain.UserToken;
 import org.daming.hoteler.auth.service.ITokenService;
 import org.daming.hoteler.auth.service.IUserService;
 import org.springframework.beans.BeansException;

@@ -9,7 +9,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @version 2022-12-21 21:04
  */
 @SpringBootApplication
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
 public class HotelerOrchestrationApplication {
 
     public static void main(String[] args) {
