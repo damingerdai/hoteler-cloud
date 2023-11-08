@@ -28,6 +28,9 @@ public class User {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Role> roles;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private List<Permission> permissions;
+
     public int getId() {
         return id;
     }
@@ -84,6 +87,14 @@ public class User {
         this.roles = roles;
     }
 
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
+    }
+
     public User(int id, String username, String firstName, String lastName, String password, String passwordType) {
         super();
         this.id = id;
@@ -103,6 +114,18 @@ public class User {
         this.password = password;
         this.passwordType = passwordType;
         this.roles = roles;
+    }
+
+    public User(int id, String username, String firstName, String lastName, String password, String passwordType, List<Role> roles, List<Permission> permissions) {
+        super();
+        this.id = id;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.passwordType = passwordType;
+        this.roles = roles;
+        this.permissions = permissions;
     }
 
     public User() {
