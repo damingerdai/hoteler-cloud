@@ -47,7 +47,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.daming</groupId>
             <artifactId>hoteler.common.core</artifactId>
@@ -55,7 +54,7 @@
     </dependencies>
 
     <build>
-        <finalName>hotler-workflow-${hoteler.version}</finalName>
+        <finalName>hoteler-workflow-${hoteler.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
