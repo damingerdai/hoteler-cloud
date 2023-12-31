@@ -35,6 +35,13 @@ spring:
           - Path=/api/v1/customers/**
         filters:
           - StripPrefix=2 # 转发之前去掉1层路径
+      - id: stat-route
+        uri: lb://workflow-service
+        order: 1
+        predicates:
+          - Path=/api/v1/stat/**
+        filters:
+          - StripPrefix=2
 logging:
   level:
     root:
