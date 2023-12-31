@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.daming.hoteler.common.response.CommonResponse;
+import org.daming.hoteler.common.response.ListResponse;
 import org.daming.hoteler.workflow.pojo.Customer;
 import org.daming.hoteler.workflow.pojo.request.CreateCustomerRequest;
 import org.daming.hoteler.workflow.pojo.request.UpdateCustomerRequest;
@@ -64,6 +65,14 @@ public class CustomerController {
         this.customerService.update(customer);
         return new CommonResponse();
     }
+
+    @Operation(summary = "获取所有的客户信息", security = { @SecurityRequirement(name = "bearer-key") })
+    @GetMapping("customers")
+    public CommonResponse list() {
+        var list = this.customerService.list();
+        return new ListResponse<>(list);
+    }
+
 
 
     public CustomerController(ICustomerService customerService) {
