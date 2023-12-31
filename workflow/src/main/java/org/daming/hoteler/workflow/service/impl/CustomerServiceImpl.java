@@ -24,7 +24,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public void update(Customer customer) throws HotelerException {
-
+        this.customerMapper.update(customer);
     }
 
     @Override

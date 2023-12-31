@@ -1,5 +1,6 @@
 package org.daming.hoteler.workflow.pojo.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.daming.hoteler.workflow.pojo.enums.Gender;
 
@@ -7,15 +8,17 @@ import java.io.Serializable;
 import java.util.StringJoiner;
 
 /**
- * @author daming
- * @version 2023-04-14 17:55
- **/
-@Schema(name = "创建客户请求体")
-public class CreateCustomerRequest implements Serializable {
+ * @author gming001
+ * @version 2023-12-31 13:20
+ */
+@Schema(name = "更新客户请求体")
+public class UpdateCustomerRequest  implements Serializable {
 
-    private static final long serialVersionUID = -7819607546063963266L;
+    private static final long serialVersionUID = 6273140802741108457L;
 
-    @Schema(name = "名字")
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private String id;
+
     private String name;
 
     private Gender gender;
@@ -23,6 +26,14 @@ public class CreateCustomerRequest implements Serializable {
     private String cardId;
 
     private long phone;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -56,26 +67,18 @@ public class CreateCustomerRequest implements Serializable {
         this.phone = phone;
     }
 
-    public CreateCustomerRequest(String name, Gender gender, String cardId, long phone) {
-        super();
-        this.name = name;
-        this.gender = gender;
-        this.cardId = cardId;
-        this.phone = phone;
-    }
-
-    public CreateCustomerRequest() {
+    public UpdateCustomerRequest() {
         super();
     }
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", CreateCustomerRequest.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", UpdateCustomerRequest.class.getSimpleName() + "[", "]")
+                .add("id='" + id + "'")
                 .add("name='" + name + "'")
                 .add("gender=" + gender)
                 .add("cardId='" + cardId + "'")
-                .add("phone='" + phone + "'")
+                .add("phone=" + phone)
                 .toString();
     }
 }
-

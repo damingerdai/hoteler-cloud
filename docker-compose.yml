@@ -38,7 +38,8 @@ services:
   nacos:
     # image: nacos/nacos-server:v2.2.0
     # https://github.com/alibaba/nacos/issues/6340
-    image: zhusaidong/nacos-server-m1:2.0.3
+    # image: zhusaidong/nacos-server-m1:2.0.3
+    image: nacos/nacos-server:v2.3.0-slim
     container_name: hoteler-nacos-2.2.0
     privileged: true
     restart: always
@@ -65,7 +66,6 @@ services:
       - hoteler-network
   bytebase:
     image: bytebase/bytebase:2.8.0
-    init: true
     container_name: bytebase
     restart: always
     ports:
