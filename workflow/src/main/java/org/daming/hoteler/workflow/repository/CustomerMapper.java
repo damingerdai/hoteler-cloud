@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Update;
 import org.daming.hoteler.common.exceptions.HotelerException;
 import org.daming.hoteler.workflow.pojo.Customer;
 
+import java.util.List;
+
 /**
  * @author daming
  * @version 2023-04-14 17:47
@@ -38,4 +40,9 @@ public interface CustomerMapper {
     WHERE id = #{name}      
     """)
     void update(Customer customer) throws HotelerException;
+
+    @Select("""
+    SELECT id, name, gender, card_id as cardId, phone FROM customers WHERE deleted_at is null       
+    """)
+    List<Customer> list() throws HotelerException;
 }

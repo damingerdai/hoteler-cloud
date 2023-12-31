@@ -34,7 +34,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public List<Customer> list() throws HotelerException {
-        return null;
+        return this.customerMapper.list();
     }
 
     @Override
