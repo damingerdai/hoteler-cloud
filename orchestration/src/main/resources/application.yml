@@ -33,7 +33,14 @@ spring:
         predicates:
           - Path=/api/v1/customer/**,/api/v1/customers/**
         filters:
-          - StripPrefix=2 # 转发之前去掉1层路径
+          - StripPrefix=2
+      - id: room-route
+        uri: lb://workflow-service
+        order: 1
+        predicates:
+          - Path=/api/v1/room/**,/api/v1/rooms/**
+        filters:
+          - StripPrefix=2
       - id: stat-route
         uri: lb://workflow-service
         order: 1
