@@ -39,12 +39,12 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User get(@PathVariable int id) {
+    public DataResponse<User>  get(@PathVariable int id) {
         var user = this.userService.get(id);
         user.setPassword(null);
         user.setPasswordType(null);
 
-        return user;
+        return new DataResponse<>(user);
     }
 
     @GetMapping("")
@@ -53,6 +53,7 @@ public class UserController {
         var user = this.tokenService.verifyToken(token);
         user.setPassword(null);
         user.setPasswordType(null);
+
         return new DataResponse<>(user);
     }
 
