@@ -27,6 +27,13 @@ spring:
           - Path=/api/v1/user/**
         filters: # 过滤器,请求在传递过程中可以通过过滤器对其进行一定的修改
           - StripPrefix=2 # 转发之前去掉1层路径
+      - id: customer-checkin-record-route
+        uri: lb://workflow-service
+        order: 1
+        predicates:
+          - Path=/api/v1/customer-checkin-record/**
+        filters:
+          - StripPrefix=2
       - id: customer-route
         uri: lb://workflow-service
         order: 1

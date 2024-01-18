@@ -11,16 +11,16 @@ public class CreateRoomRequest implements Serializable {
 
     private static final long serialVersionUID = 3097150561081198317L;
 
-    private String name;
+    private String roomname;
 
     private double price;
 
-    public String getName() {
-        return name;
+    public String getRoomname() {
+        return roomname;
     }
 
-    public CreateRoomRequest setName(String name) {
-        this.name = name;
+    public CreateRoomRequest setRoomname(String roomname) {
+        this.roomname = roomname;
         return this;
     }
 
@@ -40,7 +40,7 @@ public class CreateRoomRequest implements Serializable {
     @Override
     public String toString() {
         return new StringJoiner(", ", CreateRoomRequest.class.getSimpleName() + "[", "]")
-                .add("name='" + name + "'")
+                .add("roomname='" + roomname + "'")
                 .add("price=" + price)
                 .toString();
     }

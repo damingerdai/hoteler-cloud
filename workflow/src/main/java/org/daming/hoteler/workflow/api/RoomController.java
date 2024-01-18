@@ -1,5 +1,6 @@
 package  org.daming.hoteler.workflow.api;
 
+import org.daming.hoteler.common.response.ListResponse;
 import  org.daming.hoteler.workflow.pojo.Room;
 import  org.daming.hoteler.workflow.pojo.enums.RoomStatus;
 import  org.daming.hoteler.workflow.pojo.request.CreateRoomRequest;
@@ -22,9 +23,9 @@ public class RoomController {
     private final IRoomService roomService;
 
     @PostMapping(path = "room")
-    public Room createRoom(@RequestBody  CreateRoomRequest request) {
+    public Room createRoom(@RequestBody CreateRoomRequest request) {
         var room = new Room()
-                .setName(request.getName())
+                .setName(request.getRoomname())
                 .setPrice(request.getPrice())
                 .setStatus(RoomStatus.NoUse);
         var id = this.roomService.create(room);
@@ -40,9 +41,9 @@ public class RoomController {
     }
 
     @GetMapping(path = "rooms")
-    public List<Room> listRoom() {
+    public ListResponse<Room> listRoom() {
         var rooms = this.roomService.list();
-        return rooms;
+        return new ListResponse<>(rooms);
     }
 
     public RoomController(IRoomService roomService) {

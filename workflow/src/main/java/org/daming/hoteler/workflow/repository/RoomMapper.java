@@ -58,6 +58,6 @@ public interface RoomMapper {
     @Update("update rooms set name = #{name}, price = #{price}, status = #{status, typeHandler= org.daming.hoteler.workflow.pojo.handler.RoomStatusTypeHandler}, update_dt = statement_timestamp(), update_user = 'system' where id = #{id}")
     void update(Room room);
 
-    @Update("update rooms set status = #{status, typeHandler= org.daming.hoteler.workflow.pojo.handler.RoomStatusTypeHandler}, update_dt = statement_timestamp(), update_user = 'system' where id = #{id}")
+    @Update("update rooms set status = #{status, typeHandler= org.daming.hoteler.workflow.pojo.handler.RoomStatusTypeHandler}, update_dt = statement_timestamp(), update_user = 'system' where id = #{id}::uuid")
     void updateStatus(@Param("id") String id, @Param("status") RoomStatus status);
 }

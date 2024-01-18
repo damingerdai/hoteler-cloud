@@ -1,6 +1,7 @@
 package  org.daming.hoteler.workflow.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import  org.daming.hoteler.workflow.pojo.enums.RoomStatus;
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ public class Room implements Serializable {
 
     private String id;
 
+    @JsonProperty("roomname")
     private String name;
 
     private RoomStatus status;
