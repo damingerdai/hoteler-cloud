@@ -20,8 +20,8 @@ services:
       - hoteler-network
 
   postgres:
-    image: postgres:16.0-alpine3.18
-    container_name: hoteler-postgres-16.0
+    image: postgres:16.1-alpine3.19
+    container_name: hoteler-postgres-16.1
     ports:
       - 5432:5432
     volumes:
