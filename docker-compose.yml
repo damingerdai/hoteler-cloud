@@ -1,8 +1,8 @@
 version: '3'
 services:
   mysql:
-    image: mysql:8.1.0
-    container_name: hoteler-mysql-8.0
+    image: mysql:8.3.0
+    container_name: hoteler-mysql-8.3
     volumes:
       - hoteler-mysql-volume:/var/lib/mysql
       - ./database/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
