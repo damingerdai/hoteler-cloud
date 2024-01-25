@@ -1,0 +1,3 @@
+CREATE DATABASE  hoteler;
+CREATE DATABASE  bytebase;
+

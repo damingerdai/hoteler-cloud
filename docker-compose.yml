@@ -26,10 +26,11 @@ services:
       - 5432:5432
     volumes:
       - hoteler-postgres-volume:/var/lib/postgresql/data
+      - ./database/postgtres/init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
-      POSTGRES_DB: hoteler
+      POSTGRES_DB: postgres
       TZ: 'GMT+8'
       PGTZ: 'GMT+8'
     networks:
@@ -40,7 +41,7 @@ services:
     # https://github.com/alibaba/nacos/issues/6340
     # image: zhusaidong/nacos-server-m1:2.0.3
     image: nacos/nacos-server:v2.3.0-slim
-    container_name: hoteler-nacos-2.2.0
+    container_name: hoteler-nacos-2.3.0
     privileged: true
     restart: always
     environment:
@@ -65,15 +66,19 @@ services:
     networks:
       - hoteler-network
   bytebase:
-    image: bytebase/bytebase:2.8.0
-    container_name: bytebase
+    image: bytebase/bytebase:2.13.3
+    container_name: hoteler-bytebase-2.13.3
     restart: always
     ports:
       - 5678:5678
     # # Uncomment the following lines to persist data
     volumes:
        - hoteler-bytebase-volume:/var/opt/bytebase
-    command: [ "--data", "/var/opt/bytebase", "--port", "5678" ]
+    command: [ "--data", "/var/opt/bytebase", "--port", "5678", "--pg", "postgresql://postgres:123456@postgres:5432/bytebase?sslmode=disable" ]
+    depends_on:
+      - postgres
+    networks:
+      - hoteler-network
 
 volumes:
   hoteler-mysql-volume:
