@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.daming.hoteler.common.response.CommonResponse;
+import org.daming.hoteler.common.response.DataResponse;
 import org.daming.hoteler.common.response.ListResponse;
 import org.daming.hoteler.workflow.pojo.Customer;
 import org.daming.hoteler.workflow.pojo.request.CreateCustomerRequest;
@@ -34,7 +35,7 @@ public class CustomerController {
             }
     )
     @PostMapping("customer")
-    public Customer create(@RequestBody CreateCustomerRequest request) {
+    public DataResponse<Customer> create(@RequestBody CreateCustomerRequest request) {
         var customer = new Customer()
                 .setName(request.getName())
                 .setGender(request.getGender())
@@ -42,15 +43,17 @@ public class CustomerController {
                 .setPhone(request.getPhone());
         var id = this.customerService.create(customer);
         customer.setId(id);
+        var response = new DataResponse<>(customer);
 
-        return customer;
+        return response;
     }
 
     @GetMapping("customer/{id}")
-    public Customer get(@PathVariable String id) {
+    public DataResponse<Customer> get(@PathVariable String id) {
         var customer = this.customerService.get(id);
+        var response = new DataResponse<>(customer);
 
-        return customer;
+        return response;
     }
 
     @Operation(summary = "更新客户信息", security = { @SecurityRequirement(name = "bearer-key") })
