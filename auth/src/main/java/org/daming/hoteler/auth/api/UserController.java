@@ -29,13 +29,13 @@ public class UserController {
     private final ITokenService tokenService;
 
     @PostMapping("")
-    public User create(@RequestBody User user) {
+    public DataResponse<User> create(@RequestBody User user) {
         var id  = this.userService.create(user);
         user.setId(id);
         user.setPassword(null);
         user.setPasswordType(null);
 
-        return user;
+        return new DataResponse<>(user);
     }
 
     @GetMapping("/{id}")
@@ -58,22 +58,17 @@ public class UserController {
     }
 
     @PutMapping("")
-    public User update(@RequestBody User user) {
+    public DataResponse<User> update(@RequestBody User user) {
         this.userService.update(user);
 
-        var id  = this.userService.create(user);
-        user.setId(id);
-        user.setPassword(null);
-        user.setPasswordType(null);
-
-        return user;
+        return new DataResponse<>(user);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable int id) {
+    public DataResponse<String> delete(@PathVariable int id) {
         this.userService.delete(id);
 
-        return ResponseEntity.ok("ok");
+        return new DataResponse<>("ok");
     }
 
     public UserController(IUserService userService, ITokenService tokenService) {
