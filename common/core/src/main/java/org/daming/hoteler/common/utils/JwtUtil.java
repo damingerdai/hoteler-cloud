@@ -31,7 +31,7 @@ public class JwtUtil {
     }
 
     public static Claims parseJwt(String jwt, SecretKey secretKey) {
-        var claim = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(jwt).getBody();
+        var claim = Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(jwt).getPayload();
         return claim;
     }
 
