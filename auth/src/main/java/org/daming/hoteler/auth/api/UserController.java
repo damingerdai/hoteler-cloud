@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.daming.hoteler.auth.domain.User;
 import org.daming.hoteler.auth.service.ITokenService;
 import org.daming.hoteler.auth.service.IUserService;
+import org.daming.hoteler.common.errors.IErrorService;
+import org.daming.hoteler.common.exceptions.HotelerException;
 import org.daming.hoteler.common.response.DataResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,6 +30,8 @@ public class UserController {
     private final IUserService userService;
     private final ITokenService tokenService;
 
+    private final IErrorService errorService;
+
     @PostMapping("")
     public DataResponse<User> create(@RequestBody User user) {
         var id  = this.userService.create(user);
@@ -48,13 +52,20 @@ public class UserController {
     }
 
     @GetMapping("")
-    public DataResponse<User> get(@RequestHeader(value = "Authorization", required = true) String authorization) {
-        var token = authorization.split("Bearer ")[1];
-        var user = this.tokenService.verifyToken(token);
-        user.setPassword(null);
-        user.setPasswordType(null);
+    public DataResponse<User> get(@RequestHeader(value = "Authorization", required = true) String authorization) throws HotelerException {
+        try {
+            var token = authorization.split("Bearer ")[1];
+            var user = this.tokenService.verifyToken(token);
+            user.setPassword(null);
+            user.setPasswordType(null);
 
-        return new DataResponse<>(user);
+            return new DataResponse<>(user);
+        } catch (HotelerException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            throw this.errorService.createHotelerSystemException(ex.getMessage(), ex);
+        }
+
     }
 
     @PutMapping("")
@@ -71,9 +82,10 @@ public class UserController {
         return new DataResponse<>("ok");
     }
 
-    public UserController(IUserService userService, ITokenService tokenService) {
+    public UserController(IUserService userService, ITokenService tokenService, IErrorService errorService) {
         super();
         this.userService = userService;
         this.tokenService = tokenService;
+        this.errorService = errorService;
     }
 }
