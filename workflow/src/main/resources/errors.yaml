@@ -1,0 +1,9 @@
+errors:
+  - code: 700001
+    message: SQL '%s' error.
+  - code: 800001
+    message: customer create error.
+  - code: 800002
+    message: customer update error.
+  - code: 800003
+    message: customer get error
