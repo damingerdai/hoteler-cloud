@@ -1,6 +1,8 @@
 package org.daming.hoteler.auth.service.impl;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import org.daming.hoteler.common.domain.UserToken;
+import org.daming.hoteler.common.errors.IErrorService;
 import org.daming.hoteler.common.exceptions.HotelerException;
 import org.daming.hoteler.common.utils.CommonUtils;
 import org.daming.hoteler.common.utils.JwtUtil;
@@ -25,20 +27,22 @@ public class TokenServiceImpl implements ITokenService, ApplicationContextAware 
 
     private ApplicationContext applicationContext;
 
-    private IUserService userService;
+    private final IUserService userService;
 
-    private ISecretPropService secretPropService;
+    private final ISecretPropService secretPropService;
+
+    private final IErrorService errorService;
 
     @Override
     public UserToken createToken(String username, String password) throws HotelerException {
         var user = userService.getUserByUsername(username);
         if (Objects.isNull(user)) {
-            throw new RuntimeException("no user or password error");
+            throw this.errorService.createHotelerException(600005);
         }
         var passwordType = CommonUtils.isNotEmpty(user.getPasswordType()) ? user.getPasswordType() : "noop";
         var passwordService = this.getPasswordService(passwordType);
         if (!user.getPassword().equals(passwordService.encodePassword(password))) {
-            throw new RuntimeException("no user or password error");
+            throw this.errorService.createHotelerException(600005);
         }
         return doCreateToken(user);
     }
@@ -58,41 +62,52 @@ public class TokenServiceImpl implements ITokenService, ApplicationContextAware 
 
     @Override
     public UserToken refreshToken(String refreshToken) throws HotelerException {
-        var key = JwtUtil.generalKey(this.secretPropService.getKey());
-        var claim = JwtUtil.parseJwt(refreshToken, key);
-        var sub = claim.getSubject();
-        var subs = sub.split("@");
-        var userId = subs[0];
-        var username = subs[1];
-        var user = Optional.ofNullable(userService.get(Integer.parseInt(userId)))
-                .orElseThrow(() ->  new RuntimeException("no user or password error"));
-        return doCreateToken(user);
+        try {
+            var key = JwtUtil.generalKey(this.secretPropService.getKey());
+            var claim = JwtUtil.parseJwt(refreshToken, key);
+            var sub = claim.getSubject();
+            var subs = sub.split("@");
+            var userId = subs[0];
+            var username = subs[1];
+            var user = Optional.ofNullable(userService.get(Integer.parseInt(userId)))
+                    .orElseThrow(() ->  this.errorService.createHotelerException(600005));
+            return doCreateToken(user);
+        } catch (ExpiredJwtException ex) {
+            throw this.errorService.createHotelerException(600009, ex);
+        }
+
     }
 
     @Override
     public User verifyToken(String token) throws HotelerException {
-        var key = JwtUtil.generalKey(this.secretPropService.getKey());
-        var claim = JwtUtil.parseJwt(token, key);
-        var sub = claim.getSubject();
-        var subs = sub.split("@");
-        var userId = subs[0];
-        var username = subs[1];
-        var user = userService.get(Integer.parseInt(userId));
-        if (Objects.isNull(user)) {
-            throw new RuntimeException("no user");
+        try {
+            var key = JwtUtil.generalKey(this.secretPropService.getKey());
+            var claim = JwtUtil.parseJwt(token, key);
+            var sub = claim.getSubject();
+            var subs = sub.split("@");
+            var userId = subs[0];
+            var username = subs[1];
+            var user = userService.get(Integer.parseInt(userId));
+            if (Objects.isNull(user)) {
+                this.errorService.createHotelerException(600005);
+            }
+            user.setPassword("");
+            return user;
+        } catch (ExpiredJwtException ex) {
+            throw this.errorService.createHotelerException(600010, ex);
         }
-        user.setPassword("");
-        return user;
+
     }
 
     private IPasswordService getPasswordService(String passwordType) {
         return Objects.requireNonNull(this.applicationContext).getBean(passwordType + "PasswordService", IPasswordService.class);
     }
 
-    public TokenServiceImpl(IUserService userService, ISecretPropService secretPropService) {
+    public TokenServiceImpl(IUserService userService, ISecretPropService secretPropService, IErrorService errorService) {
         super();
         this.userService = userService;
         this.secretPropService = secretPropService;
+        this.errorService = errorService;
     }
 
     @Override
