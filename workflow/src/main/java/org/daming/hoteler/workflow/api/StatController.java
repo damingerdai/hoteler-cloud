@@ -7,6 +7,8 @@ import org.daming.hoteler.common.response.DataResponse;
 import org.daming.hoteler.workflow.pojo.stat.PastWeekCustomerCountStat;
 import org.daming.hoteler.workflow.pojo.stat.RoomNumsStat;
 import org.daming.hoteler.workflow.pojo.stat.RoomStatusStat;
+import org.daming.hoteler.workflow.service.stat.ICustomerStatService;
+import org.daming.hoteler.workflow.service.stat.IRoomStatusStatService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,25 +22,35 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("stat")
 public class StatController {
 
+    private final IRoomStatusStatService roomStatusStatService;
+
+    private final ICustomerStatService customerStatService;
+
     @Operation(summary = "获取房间状态", security = { @SecurityRequirement(name = "bearer-key") })
     @GetMapping(path = "rooms")
     public DataResponse<RoomStatusStat> getRoomStatusStat() {
-        var roomStatusStat = new RoomStatusStat().setCurrentWeekInUsedRoomNum(10).setLastWeekInUsedRoomNum(12);
+        var roomStatusStat = this.roomStatusStatService.countRoomStatusStatistics();
         return new DataResponse(roomStatusStat);
     }
 
     @Operation(summary = "获取房间数量统计", security = { @SecurityRequirement(name = "bearer-key") })
     @GetMapping(path = "rooms/nums")
     public DataResponse<RoomNumsStat> getRoomNumStat() {
-        var roomNumsStat = new RoomNumsStat().setTotalNums(10).setNotUsedNums(4).setInUseNums(6);
+        var roomNumsStat = this.roomStatusStatService.countRoomNumStatistics();
         return new DataResponse(roomNumsStat);
     }
 
     @Operation(summary = "获取客户数量统计", security = { @SecurityRequirement(name = "bearer-key") })
     @GetMapping(path = "customers/counts")
     public DataResponse<PastWeekCustomerCountStat> getPastWeekCustomersCounts() {
-        var pastWeekCustomerCountStat = new PastWeekCustomerCountStat();
+        var pastWeekCustomerCountStat = this.customerStatService.countPastWeekCustomerCountStat();
         return new DataResponse(pastWeekCustomerCountStat);
+    }
+
+    public StatController(IRoomStatusStatService roomStatusStatService, ICustomerStatService customerStatService) {
+        super();
+        this.roomStatusStatService = roomStatusStatService;
+        this.customerStatService = customerStatService;
     }
 
 }
