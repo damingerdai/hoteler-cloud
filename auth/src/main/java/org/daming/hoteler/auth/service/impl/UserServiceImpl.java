@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -83,6 +84,11 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void delete(int id) {
         this.userDao.delete(id);
+    }
+
+    @Override
+    public List<User> list() {
+        return this.userDao.list();
     }
 
     @Autowired

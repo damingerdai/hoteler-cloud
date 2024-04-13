@@ -7,10 +7,8 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -45,17 +43,10 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public User get(int id) {
-        var statement = "SELECT id, username, first_name, last_name, password, password_type FROM users WHERE id = ?";
+        var statement = "SELECT id, username, first_name, last_name, password, password_type FROM users WHERE id = ? AND deleted_at is null";
         return this.jdbcTemplate.query(statement, (rse) -> {
             while (rse.next()) {
-                var user = new User();
-                user.setId(rse.getInt("id"));
-                user.setUsername(rse.getString("username"));
-                user.setFirstName(rse.getString("first_name"));
-                user.setLastName(rse.getString("last_name"));
-                user.setPassword(rse.getString("password"));
-                user.setPasswordType(rse.getString("password_type"));
-                return user;
+                return getUser(rse);
             }
             return null;
         }, id);
@@ -63,17 +54,10 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public User getUserByUsername(String username) {
-        var statement = "SELECT id, username, first_name, last_name, password, password_type FROM users WHERE username = ?";
+        var statement = "SELECT id, username, first_name, last_name, password, password_type FROM users WHERE username = ? AND deleted_at is null";
         return this.jdbcTemplate.query(statement, (rse) -> {
             while (rse.next()) {
-                var user = new User();
-                user.setId(rse.getInt("id"));
-                user.setUsername(rse.getString("username"));
-                user.setFirstName(rse.getString("first_name"));
-                user.setLastName(rse.getString("last_name"));
-                user.setPassword(rse.getString("password"));
-                user.setPasswordType(rse.getString("password_type"));
-                return user;
+                return getUser(rse);
             }
             return null;
         }, username);
@@ -100,6 +84,24 @@ public class UserDaoImpl implements IUserDao {
     public void delete(int id) {
         var statement = "update users set deleted_at = now() where id = ?";
         this.jdbcTemplate.update(statement, id);
+    }
+
+    @Override
+    public List<User> list() {
+        var statement = "SELECT id, username, first_name, last_name, password, password_type FROM users WHERE deleted_at is null";
+        var users = this.jdbcTemplate.query(statement, (rs, i) -> getUser(rs));
+        return users;
+    }
+
+    private User getUser(ResultSet rs) throws SQLException {
+        var user = new User();
+        user.setId(rs.getInt("id"));
+        user.setUsername(rs.getString("username"));
+        user.setFirstName(rs.getString("first_name"));
+        user.setLastName(rs.getString("last_name"));
+        user.setPassword(rs.getString("password"));
+        user.setPasswordType(rs.getString("password_type"));
+        return user;
     }
 
     public UserDaoImpl(JdbcTemplate jdbcTemplate) {

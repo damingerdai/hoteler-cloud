@@ -2,6 +2,8 @@ package org.daming.hoteler.auth.repository;
 
 import org.daming.hoteler.auth.domain.User;
 
+import java.util.List;
+
 /**
  * @author gming001
  * @version 2022-12-08 12:10
@@ -17,4 +19,6 @@ public interface IUserDao {
     void update(User user);
 
     void delete(int id);
+
+    List<User> list();
 }
