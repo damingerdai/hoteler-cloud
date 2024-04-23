@@ -80,6 +80,30 @@ services:
     networks:
       - hoteler-network
 
+  prometheus:
+    image: prom/prometheus:v2.51.1
+    container_name: prometheus
+    hostname: prometheus
+    restart: always
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - '9090:9090'
+    networks:
+      - hoteler-network
+
+  grafana:
+    image: grafana/grafana:10.4.2
+    container_name: grafana
+    hostname: grafana
+    restart: always
+    ports:
+      - '3000:3000'
+    depends_on:
+      - prometheus
+    networks:
+      - hoteler-network
+
 volumes:
   hoteler-mysql-volume:
     external: true
