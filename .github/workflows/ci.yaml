@@ -17,7 +17,7 @@ jobs:
         java-version: [ 21 ]
         os: [ ubuntu-latest ]
     steps:
-      - uses: actions/checkout@v4.1.1
+      - uses: actions/checkout@v4.1.7
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
