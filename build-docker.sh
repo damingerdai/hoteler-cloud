@@ -10,7 +10,7 @@ docker build -t $mavenContainerName -f Dockerfile .
 targets="auth workflow orchestration"
 
 # 循环构建每个 target 镜像
-for target in "${targets[@]}"; do
+for target in $targets; do
     targetImageName="damingerdai/$target"
 
     # 构建 target 镜像
