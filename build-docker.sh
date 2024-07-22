@@ -7,7 +7,7 @@ mavenContainerName="maven-build"
 docker build -t $mavenContainerName -f Dockerfile .
 
 # 定义 targets
-targets=("auth" "workflow" "orchestration")
+targets="auth workflow orchestration"
 
 # 循环构建每个 target 镜像
 for target in "${targets[@]}"; do
