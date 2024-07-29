@@ -14,7 +14,7 @@ COPY . /app/
 
 RUN mvn clean install package
 
-FROM openjdk:22-slim as auth
+FROM openjdk:22-slim AS auth
 WORKDIR /app
 COPY --from=back-build /app/auth/target*.jar /app/app.jar
 ENV TZ=Aisa/Shanghai
@@ -23,7 +23,7 @@ HEALTHCHECK CMD curl --fail http://localhost:8443/ping || exit 1
 EXPOSE 8443
 CMD ["sh", "-c", "exec java -jar app.jar"]
 
-FROM openjdk:22-slim as workflow
+FROM openjdk:22-slim AS workflow
 WORKDIR /app
 COPY --from=back-build /app/workflow/target/*.jar /app/app.jar
 ENV TZ=Aisa/Shanghai
@@ -32,7 +32,7 @@ HEALTHCHECK CMD curl --fail http://localhost:8443/ping || exit 1
 EXPOSE 8443
 CMD ["sh", "-c", "exec java -jar app.jar"]
 
-FROM openjdk:22-slim as orchestration
+FROM openjdk:22-slim AS orchestration
 WORKDIR /app
 COPY --from=back-build /app/orchestration/target*.jar /app/app.jar
 ENV TZ=Aisa/Shanghai
