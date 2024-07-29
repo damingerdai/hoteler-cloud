@@ -1,3 +1,4 @@
+$sha = (git rev-parse HEAD)
 # 定义 Maven 容器名称
 $mavenContainerName = "maven-build"
 
@@ -12,5 +13,5 @@ foreach ($target in $targets) {
     $targetImageName = "damingerdai/$target"
 
     # 构建 target 镜像
-    docker build -t $targetImageName -f Dockerfile --build-arg target=$target .
+    docker build -t $targetImageName:$sha -f Dockerfile --build-arg target=$target .
 }
