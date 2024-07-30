@@ -48,6 +48,14 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.daming</groupId>
             <artifactId>hoteler.common.core</artifactId>
         </dependency>
@@ -84,7 +92,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>10.17.0</version>
                 <configuration>
-                    <url>jdbc:postgresql://127.0.0.1:5432/hoteler</url>
+                    <url>jdbc:postgresql://localhost:5432/hoteler</url>
                     <user>postgres</user>
                     <password>123456</password>
                     <baselineOnMigrate>true</baselineOnMigrate>
