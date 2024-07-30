@@ -39,7 +39,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public void delete(String id) throws HotelerException {
-
+        this.customerMapper.delete(id);
     }
 
     public CustomerServiceImpl(CustomerMapper customerMapper) {

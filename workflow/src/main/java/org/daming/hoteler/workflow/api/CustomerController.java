@@ -11,12 +11,7 @@ import org.daming.hoteler.workflow.pojo.Customer;
 import org.daming.hoteler.workflow.pojo.request.CreateCustomerRequest;
 import org.daming.hoteler.workflow.pojo.request.UpdateCustomerRequest;
 import org.daming.hoteler.workflow.service.ICustomerService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author daming
@@ -76,6 +71,13 @@ public class CustomerController {
         return new ListResponse<>(list);
     }
 
+
+    @DeleteMapping("customer/{id}")
+    public CommonResponse delete(@PathVariable String id) {
+        this.customerService.delete(id);
+
+        return new CommonResponse();
+    }
 
 
     public CustomerController(ICustomerService customerService) {

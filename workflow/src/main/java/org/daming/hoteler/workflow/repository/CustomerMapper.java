@@ -1,5 +1,6 @@
 package org.daming.hoteler.workflow.repository;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -45,4 +46,14 @@ public interface CustomerMapper {
     SELECT id, name, gender, card_id as cardId, phone FROM customers WHERE deleted_at is null       
     """)
     List<Customer> list() throws HotelerException;
+
+    @Update("""
+    UPDATE customers SET update_dt = statement_timestamp(),update_user = 'system' WHERE id = #{id}
+    """)
+    void delete(String id) throws HotelerException;
+
+    @Delete("""
+    DELETE FROM customers WHERE id = #{id}
+    """)
+    void doDelete(String id) throws HotelerException;
 }
