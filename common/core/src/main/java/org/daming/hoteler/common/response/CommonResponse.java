@@ -6,7 +6,7 @@ package org.daming.hoteler.common.response;
  */
 public class CommonResponse {
 
-    private static final int SUCCESS_STATUS = 200;
+    public static final int SUCCESS_STATUS = 200;
 
     private int status;
 

@@ -18,6 +18,10 @@ public class DataResponse<T> extends CommonResponse {
         this.data = data;
     }
 
+    public DataResponse() {
+        super();
+    }
+
     public DataResponse(T data) {
         super();
         this.data = data;
@@ -27,6 +31,7 @@ public class DataResponse<T> extends CommonResponse {
     public String toString() {
         return new StringJoiner(", ", DataResponse.class.getSimpleName() + "[", "]")
                 .add("data=" + data)
+                .add("status" + this.getStatus())
                 .toString();
     }
 }
