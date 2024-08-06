@@ -11,6 +11,8 @@ public interface IErrorService {
 
     HotelerException createHotelerException(int code, Throwable cause);
 
+    HotelerException createHotelerException(int code, Object... params);
+
     HotelerException createHotelerException(int code);
 
     HotelerException createSqlHotelerException(Exception ex, Object...params);

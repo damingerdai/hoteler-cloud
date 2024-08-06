@@ -7,3 +7,7 @@ errors:
     message: customer update error.
   - code: 800003
     message: customer get error
+  - code: 800004
+    message: "customer delete error: '%s'"
+  - code: 800005
+    message: "auth service: '%s'"

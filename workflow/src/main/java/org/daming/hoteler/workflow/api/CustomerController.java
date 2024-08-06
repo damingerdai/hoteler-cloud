@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.daming.hoteler.common.domain.Role;
+import org.daming.hoteler.common.errors.IErrorService;
+import org.daming.hoteler.common.exceptions.HotelerException;
 import org.daming.hoteler.common.response.CommonResponse;
 import org.daming.hoteler.common.response.DataResponse;
 import org.daming.hoteler.common.response.ListResponse;
@@ -25,6 +27,7 @@ public class CustomerController {
 
     private final ICustomerService customerService;
     private final IUserFeignService userFeignService;
+    private final IErrorService errorService;
 
     @Operation(
             summary = "创建客户信息", security = { @SecurityRequirement(name = "bearer-key") },
@@ -77,28 +80,34 @@ public class CustomerController {
 
     @DeleteMapping("customer/{id}")
     public CommonResponse delete(@PathVariable String id, @RequestHeader(value = "Authorization") String accessToken) {
-        var userResponse = this.userFeignService.getUserByAccessToken(accessToken);
-        System.out.println("userResponse");
-        System.out.println(userResponse);
-        if (userResponse == null || userResponse.getStatus() != CommonResponse.SUCCESS_STATUS) {
-           throw new RuntimeException("非法操作");
+        try {
+            var userResponse = this.userFeignService.getUserByAccessToken(accessToken);;
+            if (userResponse == null || userResponse.getStatus() != CommonResponse.SUCCESS_STATUS) {
+                throw this.errorService.createHotelerException(800005, "fail to get current user info");
+            }
+            var user = userResponse.getData();
+            if (user == null) {
+                throw this.errorService.createHotelerException(800005, "fail to get current user info");
+            }
+            if (user.getRoles().stream().map(Role::getName).noneMatch(r -> r.equalsIgnoreCase("admin"))) {
+                throw this.errorService.createHotelerException(800005, "delete customer need admin role");
+            }
+            this.customerService.delete(id);
+            return new CommonResponse();
+        } catch (HotelerException he) {
+            throw he;
+        } catch (Exception ex) {
+            throw this.errorService.createHotelerException(800004, new Object[] { ex.getMessage() }, ex.getCause());
         }
-        var user = userResponse.getData();
-        if (user == null) {
-            throw new RuntimeException("非法操作");
-        }
-        if (user.getRoles().stream().map(Role::getName).noneMatch(r -> r.equalsIgnoreCase("admin"))) {
-            throw new RuntimeException("非法操作，只有管理员才有权限");
-        }
-        this.customerService.delete(id);
-        return new CommonResponse();
+
     }
 
 
-    public CustomerController(ICustomerService customerService, IUserFeignService userFeignService) {
+    public CustomerController(ICustomerService customerService, IUserFeignService userFeignService, IErrorService errorService) {
         super();
         this.customerService = customerService;
         this.userFeignService = userFeignService;
+        this.errorService = errorService;
     }
 
 }

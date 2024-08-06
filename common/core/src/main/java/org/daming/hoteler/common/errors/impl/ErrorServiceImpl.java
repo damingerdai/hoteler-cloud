@@ -27,6 +27,12 @@ public class ErrorServiceImpl implements IErrorService  {
     }
 
     @Override
+    public HotelerException createHotelerException(int code, Object[] params) {
+        var message = this.errorCodeService.getMessage(code, params);
+        return ExceptionBuilder.buildException(code, message);
+    }
+
+    @Override
     public HotelerException createHotelerException(int code) {
         var message = this.errorCodeService.getMessage(code);
         return ExceptionBuilder.buildException(code, message);

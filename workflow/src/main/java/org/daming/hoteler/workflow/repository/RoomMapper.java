@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Update;
 import  org.daming.hoteler.workflow.pojo.Room;
 import  org.daming.hoteler.workflow.pojo.enums.RoomStatus;
 import  org.daming.hoteler.workflow.pojo.handler.RoomStatusTypeHandler;
+import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
@@ -23,10 +24,10 @@ import java.util.List;
 public interface RoomMapper {
 
     @Select("insert into rooms (name, price, status, create_dt, create_user, update_dt, update_user) values (#{name}, #{price}, #{status, typeHandler= org.daming.hoteler.workflow.pojo.handler.RoomStatusTypeHandler}, statement_timestamp(),'system', statement_timestamp(), 'system') returning id")
-    String create(Room room);
+    String create(Room room) throws DataAccessException;
 
     @Delete("update rooms set update_dt = statement_timestamp(), update_user = 'system', deleted_at = statement_timestamp() where id = #{id}")
-    void delete(String id);
+    void delete(String id) throws DataAccessException;
 
     @Select("select id, name, price, status from rooms where id = #{id}::uuid and deleted_at is null")
     @Results({
@@ -35,7 +36,7 @@ public interface RoomMapper {
             @Result(column = "price", property = "price"),
             @Result(column = "status", property = "status", typeHandler = RoomStatusTypeHandler.class)
     })
-    Room get(String id);
+    Room get(String id) throws DataAccessException;
 
     @Select("select id, name, price, status from rooms where name = #{name} and deleted_at is null")
     @Results({
@@ -44,7 +45,7 @@ public interface RoomMapper {
             @Result(column = "price", property = "price"),
             @Result(column = "status", property = "status", typeHandler = RoomStatusTypeHandler.class)
     })
-    Room getByName(String name);
+    Room getByName(String name) throws DataAccessException;
 
     @Select("select id, name, price, status from rooms where deleted_at is null")
     @Results({
@@ -53,11 +54,11 @@ public interface RoomMapper {
             @Result(column = "price", property = "price"),
             @Result(column = "status", property = "status", typeHandler = RoomStatusTypeHandler.class)
     })
-    List<Room> list();
+    List<Room> list() throws DataAccessException;
 
     @Update("update rooms set name = #{name}, price = #{price}, status = #{status, typeHandler= org.daming.hoteler.workflow.pojo.handler.RoomStatusTypeHandler}, update_dt = statement_timestamp(), update_user = 'system' where id = #{id}")
-    void update(Room room);
+    void update(Room room) throws DataAccessException;
 
     @Update("update rooms set status = #{status, typeHandler= org.daming.hoteler.workflow.pojo.handler.RoomStatusTypeHandler}, update_dt = statement_timestamp(), update_user = 'system' where id = #{id}::uuid")
-    void updateStatus(@Param("id") String id, @Param("status") RoomStatus status);
+    void updateStatus(@Param("id") String id, @Param("status") RoomStatus status) throws DataAccessException;
 }

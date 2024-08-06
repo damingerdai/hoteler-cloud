@@ -2,8 +2,7 @@ package org.daming.hoteler.workflow.repository;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.daming.hoteler.common.exceptions.HotelerException;
-import org.daming.hoteler.workflow.pojo.Customer;
+import org.springframework.dao.DataAccessException;
 
 /**
  * @author gming001
@@ -13,5 +12,5 @@ import org.daming.hoteler.workflow.pojo.Customer;
 public interface PingMapper {
 
     @Select("SELECT 'pong'")
-    String ping() throws HotelerException;
+    String ping() throws DataAccessException;
 }
