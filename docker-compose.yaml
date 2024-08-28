@@ -35,33 +35,48 @@ services:
       PGTZ: 'GMT+8'
     networks:
       - hoteler-network
-
   nacos:
-    image: nacos/nacos-server:v2.4.0-slim
+    image: qingpan/rnacos:v0.5.20
     container_name: hoteler-nacos-2.4.0
-    privileged: true
-    restart: always
-    environment:
-      - TZ=Asia/Shanghai
-      - MODE=standalone
-      - SPRING_DATASOURCE_PLATFORM=mysql
-      - MYSQL_SERVICE_HOST=mysql
-      - MYSQL_SERVICE_PORT=3306
-      - MYSQL_SERVICE_USER=root
-      - MYSQL_SERVICE_PASSWORD=123456
-      - MYSQL_SERVICE_DB_NAME=nacos
-      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=10000&socketTimeout=3000&autoReconnect=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-      - JVM_XMS=512m
-      - JVM_XMX=512m
-      - JVM_XMN=512m
     ports:
       - "8848:8848"
       - "9848:9848"
-      - "9849:9849"
-    depends_on:
-      - mysql
+      - "10848:10848"
+    volumes:
+      - hoteler-nacos-volume:/io:rw
+    environment:
+      - RNACOS_INIT_ADMIN_USERNAME=admin
+      - RNACOS_INIT_ADMIN_PASSWORD=admin
+      - RNACOS_HTTP_PORT=8848
+    restart: always
     networks:
       - hoteler-network
+#  nacos:
+#    image: nacos/nacos-server:v2.4.0-slim
+#    container_name: hoteler-nacos-2.4.0
+#    privileged: true
+#    restart: always
+#    environment:
+#      - TZ=Asia/Shanghai
+#      - MODE=standalone
+#      - SPRING_DATASOURCE_PLATFORM=mysql
+#      - MYSQL_SERVICE_HOST=mysql
+#      - MYSQL_SERVICE_PORT=3306
+#      - MYSQL_SERVICE_USER=root
+#      - MYSQL_SERVICE_PASSWORD=123456
+#      - MYSQL_SERVICE_DB_NAME=nacos
+#      - MYSQL_SERVICE_DB_PARAM=characterEncoding=utf8&connectTimeout=10000&socketTimeout=3000&autoReconnect=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+#      - JVM_XMS=512m
+#      - JVM_XMX=512m
+#      - JVM_XMN=512m
+#    ports:
+#      - "8848:8848"
+#      - "9848:9848"
+#      - "9849:9849"
+#    depends_on:
+#      - mysql
+#    networks:
+#      - hoteler-network
   bytebase:
     image: bytebase/bytebase:2.22.2
     container_name: hoteler-bytebase-2.22.0
@@ -107,6 +122,8 @@ volumes:
   hoteler-postgres-volume:
     external: true
   hoteler-bytebase-volume:
+    external: true
+  hoteler-nacos-volume:
     external: true
 
 networks:
