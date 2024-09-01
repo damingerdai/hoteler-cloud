@@ -93,7 +93,7 @@ services:
       - hoteler-network
 
   prometheus:
-    image: bitnami/prometheus:2.54.0
+    image: bitnami/prometheus:2.54.1
     container_name: prometheus
     hostname: prometheus
     restart: always
