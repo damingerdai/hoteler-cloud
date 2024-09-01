@@ -15,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * @author gming001
@@ -24,6 +26,9 @@ import java.util.Objects;
  */
 @Service
 public class UserServiceImpl implements IUserService {
+
+    private final int MAX_ATTEMPT = 5;
+    private final long LOCK_TIME_DURATION = 5L;
 
     private IUserDao userDao;
 
@@ -51,6 +56,10 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User get(int id) {
         var user = this.userDao.get(id);
+        return getUser(user);
+    }
+
+    private User getUser(User user) {
         if (Objects.nonNull(user)) {
             var roles = this.roleService.listByUserId(user.getId());
             user.setRoles(roles);
@@ -63,14 +72,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User getUserByUsername(String username) {
         var user = this.userDao.getUserByUsername(username);
-        if (Objects.nonNull(user)) {
-            var roles = this.roleService.listByUserId(user.getId());
-            user.setRoles(roles);
-            var permissions = this.permissionService.listByRoleIds(roles.stream().mapToLong(Role::getId).toArray());
-            user.setPermissions(permissions);
-        }
-
-        return user;
+        return getUser(user);
     }
 
     @Override
@@ -89,6 +91,57 @@ public class UserServiceImpl implements IUserService {
     @Override
     public List<User> list() {
         return this.userDao.list();
+    }
+
+    @Override
+    public void loginFailed(User user) {
+          var failedLoginAttempts = user.getFailedLoginAttempts();
+          var newFailedLoginAttempts = failedLoginAttempts + 1;
+          if (newFailedLoginAttempts > MAX_ATTEMPT) {
+              newFailedLoginAttempts = MAX_ATTEMPT;
+              user.setAccountNonLocked(false);
+              user.setLockTime(LocalDateTime.now());
+          }
+          user.setFailedLoginAttempts(newFailedLoginAttempts);
+          this.userDao.update(user);
+    }
+
+    @Override
+    public void resetFailedAttempts(User user) {
+        user.setFailedLoginAttempts(0);
+        user.setAccountNonLocked(true);
+        user.setLockTime(null);
+        this.userDao.update(user);
+    }
+
+    @Override
+    public boolean isAccountLocked(int id) {
+        var user = this.userDao.get(id);
+        return this.doIsAccountLocked(user);
+    }
+
+    @Override
+    public boolean isAccountLocked(User user) {
+        if (Objects.isNull(user)) {
+            return false;
+        }
+        return this.doIsAccountLocked(user);
+    }
+
+    public boolean doIsAccountLocked(User user) {
+        if (!user.isAccountNonLocked()) {
+            if (Objects.nonNull(user.getLockTime()) && user.getLockTime().isBefore(LocalDateTime.now().minusMinutes(LOCK_TIME_DURATION))) {
+                this.resetFailedAttempts(user);
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<User> getUnlockUsers() {
+        return List.of();
     }
 
     @Autowired

@@ -39,9 +39,13 @@ public class TokenServiceImpl implements ITokenService, ApplicationContextAware 
         if (Objects.isNull(user)) {
             throw this.errorService.createHotelerException(600005);
         }
+        if (this.userService.isAccountLocked(user)) {
+            throw this.errorService.createHotelerException(600014);
+        }
         var passwordType = CommonUtils.isNotEmpty(user.getPasswordType()) ? user.getPasswordType() : "noop";
         var passwordService = this.getPasswordService(passwordType);
         if (!user.getPassword().equals(passwordService.encodePassword(password))) {
+            this.userService.loginFailed(user);
             throw this.errorService.createHotelerException(600005);
         }
         return doCreateToken(user);

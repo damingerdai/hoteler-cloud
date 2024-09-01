@@ -21,4 +21,14 @@ public interface IUserService {
     void delete(int id);
 
     List<User> list();
+
+    void loginFailed(User user);
+
+    void resetFailedAttempts(User user);
+
+    boolean isAccountLocked(int id);
+
+    boolean isAccountLocked(User user);
+
+    List<User> getUnlockUsers();
 }

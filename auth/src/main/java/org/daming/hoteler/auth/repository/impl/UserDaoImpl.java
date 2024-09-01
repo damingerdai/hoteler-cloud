@@ -8,6 +8,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,8 +26,8 @@ public class UserDaoImpl implements IUserDao {
         var keyHolder = new GeneratedKeyHolder();
         var statement = """
             INSERT INTO users
-               (username, first_name, last_name, password, password_type, create_dt, create_user, update_dt, update_user)
-            VALUES (?, ?, ?, ?, ?, now(),'system', now(), 'system')""";
+               (username, first_name, last_name, password, password_type, failed_login_attempts, account_non_locked, lock_time, create_dt, create_user, update_dt, update_user)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?,now(),'system', now(), 'system')""";
         this.jdbcTemplate.update(con -> {
             var ps = con.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getUsername());
@@ -34,6 +35,9 @@ public class UserDaoImpl implements IUserDao {
             ps.setString(3, user.getLastName());
             ps.setString(4, user.getPassword());
             ps.setString(5, user.getPasswordType());
+            ps.setInt(6, user.getFailedLoginAttempts());
+            ps.setBoolean(7, user.isAccountNonLocked());
+            ps.setObject(8, user.getLockTime());
             return ps;
         }, keyHolder);
         var id = Objects.requireNonNull(keyHolder.getKey()).intValue();
@@ -43,7 +47,7 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public User get(int id) {
-        var statement = "SELECT id, username, first_name, last_name, password, password_type FROM users WHERE id = ? AND deleted_at is null";
+        var statement = "SELECT id, username, first_name, last_name, password, password_type, failed_login_attempts, account_non_locked, lock_time FROM users WHERE id = ? AND deleted_at is null";
         return this.jdbcTemplate.query(statement, (rse) -> {
             while (rse.next()) {
                 return getUser(rse);
@@ -54,7 +58,7 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public User getUserByUsername(String username) {
-        var statement = "SELECT id, username, first_name, last_name, password, password_type FROM users WHERE username = ? AND deleted_at is null";
+        var statement = "SELECT id, username, first_name, last_name, password, password_type, failed_login_attempts, account_non_locked, lock_time FROM users WHERE username = ? AND deleted_at is null";
         return this.jdbcTemplate.query(statement, (rse) -> {
             while (rse.next()) {
                 return getUser(rse);
@@ -72,12 +76,14 @@ public class UserDaoImpl implements IUserDao {
                  last_name = ?,
                  password = ?,
                  password_type = ?,
+                 failed_login_attempts = ?,
+                 account_non_locked = ?,
+                 lock_time = ?,
                  update_dt = now(),
                  update_user = 'system'
-             where id = ?
-                 
+             where id = ?                
         """;
-        this.jdbcTemplate.update(statement, user.getUsername(), user.getFirstName(), user.getLastName(), user.getPassword(), user.getPasswordType(), user.getId());
+        this.jdbcTemplate.update(statement, user.getUsername(), user.getFirstName(), user.getLastName(), user.getPassword(), user.getPasswordType(), user.getFailedLoginAttempts(), user.isAccountNonLocked(), user.getLockTime(),  user.getId());
     }
 
     @Override
@@ -88,7 +94,7 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public List<User> list() {
-        var statement = "SELECT id, username, first_name, last_name, password, password_type FROM users WHERE deleted_at is null";
+        var statement = "SELECT id, username, first_name, last_name, password, password_type, failed_login_attempts, account_non_locked, lock_time FROM users WHERE deleted_at is null";
         var users = this.jdbcTemplate.query(statement, (rs, i) -> getUser(rs));
         return users;
     }
@@ -101,6 +107,9 @@ public class UserDaoImpl implements IUserDao {
         user.setLastName(rs.getString("last_name"));
         user.setPassword(rs.getString("password"));
         user.setPasswordType(rs.getString("password_type"));
+        user.setFailedLoginAttempts(rs.getInt("failed_login_attempts"));
+        user.setAccountNonLocked(rs.getBoolean("account_non_locked"));
+        user.setLockTime(rs.getObject("lock_time", LocalDateTime.class));
         return user;
     }
 

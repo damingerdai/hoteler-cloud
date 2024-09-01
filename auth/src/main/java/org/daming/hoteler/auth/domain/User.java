@@ -2,6 +2,7 @@ package org.daming.hoteler.auth.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -30,6 +31,12 @@ public class User {
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Permission> permissions;
+
+    private int failedLoginAttempts;
+
+    private boolean accountNonLocked;
+
+    private LocalDateTime lockTime;
 
     public int getId() {
         return id;
@@ -95,6 +102,30 @@ public class User {
         this.permissions = permissions;
     }
 
+    public int getFailedLoginAttempts() {
+        return failedLoginAttempts;
+    }
+
+    public void setFailedLoginAttempts(int failedLoginAttempts) {
+        this.failedLoginAttempts = failedLoginAttempts;
+    }
+
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    public LocalDateTime getLockTime() {
+        return lockTime;
+    }
+
+    public void setLockTime(LocalDateTime lockTime) {
+        this.lockTime = lockTime;
+    }
+
     public User(int id, String username, String firstName, String lastName, String password, String passwordType) {
         super();
         this.id = id;
@@ -128,19 +159,38 @@ public class User {
         this.permissions = permissions;
     }
 
+    public User(LocalDateTime lockTime, boolean accountNonLocked, int failedLoginAttempts, List<Permission> permissions, List<Role> roles, String passwordType, String password, String lastName, String firstName, String username, int id) {
+        super();
+        this.lockTime = lockTime;
+        this.accountNonLocked = accountNonLocked;
+        this.failedLoginAttempts = failedLoginAttempts;
+        this.permissions = permissions;
+        this.roles = roles;
+        this.passwordType = passwordType;
+        this.password = password;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.username = username;
+        this.id = id;
+    }
+
     public User() {
     }
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", User.class.getSimpleName() + "[", "]")
-                .add("id=" + id)
-                .add("username='" + username + "'")
-                .add("firstName='" + firstName + "'")
-                .add("lastName='" + lastName + "'")
-                .add("password='" + password + "'")
-                .add("passwordType='" + passwordType + "'")
-                .add("roles=" + roles)
-                .toString();
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", passwordType='" + passwordType + '\'' +
+                ", roles=" + roles +
+                ", permissions=" + permissions +
+                ", failedLoginAttempts=" + failedLoginAttempts +
+                ", accountNonLocked=" + accountNonLocked +
+                ", lockTime=" + lockTime +
+                '}';
     }
 }
