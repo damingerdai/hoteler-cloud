@@ -141,7 +141,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public List<User> getUnlockUsers() {
-        return List.of();
+        return this.userDao.getUnlockUsers();
     }
 
     @Autowired

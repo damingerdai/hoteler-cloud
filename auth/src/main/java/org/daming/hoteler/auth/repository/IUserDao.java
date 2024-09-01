@@ -21,4 +21,6 @@ public interface IUserDao {
     void delete(int id);
 
     List<User> list();
+
+    List<User> getUnlockUsers();
 }

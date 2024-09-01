@@ -99,6 +99,19 @@ public class UserDaoImpl implements IUserDao {
         return users;
     }
 
+    @Override
+    public List<User> getUnlockUsers() {
+        var statement = """
+                SELECT 
+                    id, username, first_name, last_name, password, password_type, failed_login_attempts, account_non_locked, lock_time 
+                FROM users 
+                WHERE account_non_locked = 0 
+                    AND lock_time >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)
+                    AND deleted_at is null""";
+        var users = this.jdbcTemplate.query(statement, (rs, i) -> getUser(rs));
+        return users;
+    }
+
     private User getUser(ResultSet rs) throws SQLException {
         var user = new User();
         user.setId(rs.getInt("id"));
