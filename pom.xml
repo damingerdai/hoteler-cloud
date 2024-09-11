@@ -33,6 +33,7 @@
         <module>auth</module>
         <module>orchestration</module>
         <module>workflow</module>
+        <module>worker</module>
     </modules>
 
     <dependencyManagement>
@@ -85,18 +86,20 @@
         </dependencies>
     </dependencyManagement>
 
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>snapshots</id>-->
-<!--            <url>-->
-<!--                https://oss.sonatype.org/content/repositories/snapshots/-->
-<!--            </url>-->
-<!--        </repository>-->
-<!--        <repository>-->
-<!--            <id>release</id>-->
-<!--            <url>-->
-<!--                https://oss.sonatype.org/service/local/staging/deploy/maven2/-->
-<!--            </url>-->
-<!--        </repository>-->
-<!--    </repositories>-->
+
+    <repositories>
+        <repository>
+            <id>snapshots</id>
+            <url>
+                https://oss.sonatype.org/content/repositories/snapshots/
+            </url>
+        </repository>
+        <repository>
+            <id>release</id>
+            <url>
+                https://oss.sonatype.org/service/local/staging/deploy/maven2/
+            </url>
+        </repository>
+    </repositories>
 </project>
+
