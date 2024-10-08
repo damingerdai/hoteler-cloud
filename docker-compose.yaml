@@ -78,7 +78,7 @@ services:
 #    networks:
 #      - hoteler-network
   bytebase:
-    image: bytebase/bytebase:2.22.3
+    image: bytebase/bytebase:2.23.1
     container_name: hoteler-bytebase-2.22.0
     restart: always
     ports:
