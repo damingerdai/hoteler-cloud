@@ -20,7 +20,7 @@ services:
 
   postgres:
     image: postgres:17.2-alpine3.20
-    container_name: hoteler-postgres-16.3
+    container_name: hoteler-postgres-17
     ports:
       - 5432:5432
     volumes:
@@ -36,7 +36,7 @@ services:
       - hoteler-network
   nacos:
     image: qingpan/rnacos:v0.5.20
-    container_name: hoteler-nacos-2.4.0
+    container_name: hoteler-qingpan-nacos
     ports:
       - "8848:8848"
       - "9848:9848"
@@ -78,7 +78,7 @@ services:
 #      - hoteler-network
   bytebase:
     image: bytebase/bytebase:3.2.0
-    container_name: hoteler-bytebase-2.22.0
+    container_name: hoteler-bytebase-3
     restart: always
     ports:
       - 5678:5678
