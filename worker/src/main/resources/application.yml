@@ -2,7 +2,11 @@ server:
   port: 8091
 spring:
   application:
-    name: worker
+    name: worker-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
   threads:
     virtual:
       enabled: true
@@ -42,6 +46,6 @@ spring:
     startup-delay: 0 # 延迟 N 秒启动
     wait-for-jobs-to-complete-on-shutdown: true # 应用关闭时，是否等待定时任务执行完成。默认为 false ，建议设置为 true
     overwrite-existing-jobs: false # 是否覆盖已有 Job 的配置
-#logging:
-#  level:
-#    root: debug
+logging:
+  level:
+    root: info

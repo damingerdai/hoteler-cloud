@@ -8,8 +8,8 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
   datasource:
-    url: jdbc:mysql://localhost:3306/hoteler?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
-    username: hoteler
+    url: jdbc:mysql://127.0.0.1:3306/hoteler?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
   flyway:
@@ -18,7 +18,7 @@ spring:
     clean-on-validation-error: true
 secret:
   salt: dc513dcf1de6941978deb973fe98c1f6
-  key: damingerdai22
+  key: damingerdai
   personSalt: dc513dcf1de6941978deb973fe98c1f3
 logging:
   level:

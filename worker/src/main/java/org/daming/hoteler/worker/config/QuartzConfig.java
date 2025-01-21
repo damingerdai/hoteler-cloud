@@ -1,34 +1,43 @@
 package org.daming.hoteler.worker.config;
 
-import org.daming.hoteler.worker.task.FirstJob;
+import org.daming.hoteler.worker.task.AuthPingJob;
 import org.quartz.*;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class QuartzConfig {
 
-    private static final String ID = "SUMMERDAY";
-
     @Bean
-    public JobDetail jobDetail1() {
-        return JobBuilder.newJob(FirstJob.class)
-                .withIdentity(ID + " 01")
-                .storeDurably()
-                .build();
+    @LoadBalanced
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
     @Bean
-    public Trigger trigger1() {
-        // 简单的调度计划的构造器
-        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
-                .withIntervalInSeconds(5) // 频率
-                .repeatForever(); // 次数
-
-        return TriggerBuilder.newTrigger()
-                .forJob(jobDetail1())
-                .withIdentity(ID + " 01Trigger")
-                .withSchedule(scheduleBuilder)
+    public JobDetail jobDetail() {
+        JobDetail jobDetail = JobBuilder.newJob(AuthPingJob.class)
+                .withIdentity("AuthPingJob")
+                .storeDurably(true)
                 .build();
+
+        return  jobDetail;
+    }
+
+    @Bean
+    public Trigger pingTrigger(JobDetail jobDetail) {
+        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule("0/20 * * * * ?");
+        // CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule("0 0 */1 * * ?");
+
+        Trigger trigger = TriggerBuilder.newTrigger()
+                .forJob(jobDetail)
+                .withIdentity("AuthPingJob-Trigger")
+                .withSchedule(scheduleBuilder)
+                .startNow()
+                .build();
+
+        return trigger;
     }
 }
