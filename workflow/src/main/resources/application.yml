@@ -12,8 +12,15 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-
 logging:
   level:
     root:
       info
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    show:
+      details: always
