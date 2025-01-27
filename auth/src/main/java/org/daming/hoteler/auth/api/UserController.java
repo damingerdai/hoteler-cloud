@@ -5,18 +5,13 @@ import org.daming.hoteler.auth.domain.User;
 import org.daming.hoteler.auth.service.ITokenService;
 import org.daming.hoteler.auth.service.IUserService;
 import org.daming.hoteler.common.errors.IErrorService;
+import org.daming.hoteler.common.exceptions.ExceptionBuilder;
 import org.daming.hoteler.common.exceptions.HotelerException;
 import org.daming.hoteler.common.response.DataResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 /**
  * @author gming001
@@ -52,14 +47,24 @@ public class UserController {
     }
 
     @GetMapping("")
-    public DataResponse<User> get(@RequestHeader(value = "Authorization", required = true) String authorization) throws HotelerException {
+    public DataResponse<User> get(@RequestHeader(value = "Authorization", required = false) String authorization, @RequestParam(required = false) String username) throws HotelerException {
         try {
-            var token = authorization.split("Bearer ")[1];
-            var user = this.tokenService.verifyToken(token);
-            user.setPassword(null);
-            user.setPasswordType(null);
+            if (Objects.nonNull(authorization)) {
+                var token = authorization.split("Bearer ")[1];
+                var user = this.tokenService.verifyToken(token);
+                user.setPassword(null);
+                user.setPasswordType(null);
 
-            return new DataResponse<>(user);
+                return new DataResponse<>(user);
+            } else if (Objects.nonNull(username)) {
+                var user = this.userService.getUserByUsername(username);
+                user.setPassword(null);
+                user.setPasswordType(null);
+
+                return new DataResponse<>(user);
+            }
+
+            throw ExceptionBuilder.buildException(600011, "Bad request error: authorization or username is required");
         } catch (HotelerException ex) {
             throw ex;
         } catch (Exception ex) {
