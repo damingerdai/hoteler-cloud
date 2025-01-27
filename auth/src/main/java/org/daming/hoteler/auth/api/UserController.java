@@ -8,7 +8,6 @@ import org.daming.hoteler.common.errors.IErrorService;
 import org.daming.hoteler.common.exceptions.ExceptionBuilder;
 import org.daming.hoteler.common.exceptions.HotelerException;
 import org.daming.hoteler.common.response.DataResponse;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
@@ -40,8 +39,8 @@ public class UserController {
     @GetMapping("/{id}")
     public DataResponse<User>  get(@PathVariable int id) {
         var user = this.userService.get(id);
-        user.setPassword(null);
-        user.setPasswordType(null);
+//        user.setPassword(null);
+//        user.setPasswordType(null);
 
         return new DataResponse<>(user);
     }
@@ -52,14 +51,14 @@ public class UserController {
             if (Objects.nonNull(authorization)) {
                 var token = authorization.split("Bearer ")[1];
                 var user = this.tokenService.verifyToken(token);
-                user.setPassword(null);
-                user.setPasswordType(null);
+//                user.setPassword(null);
+//                user.setPasswordType(null);
 
                 return new DataResponse<>(user);
             } else if (Objects.nonNull(username)) {
                 var user = this.userService.getUserByUsername(username);
-                user.setPassword(null);
-                user.setPasswordType(null);
+//                user.setPassword(null);
+//                user.setPasswordType(null);
 
                 return new DataResponse<>(user);
             }

@@ -1,8 +1,10 @@
 package org.daming.hoteler.common.domain;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import java.util.StringJoiner;
 
-public class Role {
+public class Role implements GrantedAuthority {
 
     private long id;
 
@@ -34,6 +36,11 @@ public class Role {
         this.description = description;
     }
 
+    @Override
+    public String getAuthority() {
+        return "ROLE_" + this.name;
+    }
+
     public Role() {
         super();
     }
@@ -53,4 +60,6 @@ public class Role {
                 .add("description='" + description + "'")
                 .toString();
     }
+
+
 }

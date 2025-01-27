@@ -1,11 +1,14 @@
 package org.daming.hoteler.common.domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.StringJoiner;
 
-public class User {
+public class User implements UserDetails {
 
     private int id;
 
@@ -59,6 +62,11 @@ public class User {
         this.lastName = lastName;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -89,6 +97,26 @@ public class User {
 
     public void setPermissions(List<Permission> permissions) {
         this.permissions = permissions;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
     }
 
     public User(int id, String username, String firstName, String lastName, String password, String passwordType) {
