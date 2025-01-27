@@ -1,3 +1,4 @@
 CREATE DATABASE  hoteler;
 CREATE DATABASE  bytebase;
+CREATE DATABASE  worker;
 
