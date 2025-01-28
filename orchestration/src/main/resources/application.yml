@@ -13,48 +13,52 @@ spring:
           enabled: true # 开启后，gateway可以发现nacos中的服务
           # lowerCaseServiceId: true
       routes: # 路由数组，指定当请求跳转到相应的微服务
-      - id: token-route # 当前路由的id，保证唯一性
-        uri: lb://auth-service # lb指的是负载均衡，buy-service是nacos中的微服务名字
-        order: 1 #路由的优先级,数字越小级别越高
-        predicates:
-          - Path=/api/v1/token
-        filters: # 过滤器,请求在传递过程中可以通过过滤器对其进行一定的修改
-          - StripPrefix=2 # 转发之前去掉1层路径
-      - id: user-route # 当前路由的id，保证唯一性
-        uri: lb://auth-service # lb指的是负载均衡，buy-service是nacos中的微服务名字
-        order: 1 #路由的优先级,数字越小级别越高
-        predicates:
-          - Path=/api/v1/user/**,/api/v1/users/**
-        filters: # 过滤器,请求在传递过程中可以通过过滤器对其进行一定的修改
-          - StripPrefix=2 # 转发之前去掉1层路径
-      - id: customer-checkin-record-route
-        uri: lb://workflow-service
-        order: 1
-        predicates:
-          - Path=/api/v1/customer-checkin-record/**
-        filters:
-          - StripPrefix=2
-      - id: customer-route
-        uri: lb://workflow-service
-        order: 1
-        predicates:
-          - Path=/api/v1/customer/**,/api/v1/customers/**
-        filters:
-          - StripPrefix=2
-      - id: room-route
-        uri: lb://workflow-service
-        order: 1
-        predicates:
-          - Path=/api/v1/room/**,/api/v1/rooms/**
-        filters:
-          - StripPrefix=2
-      - id: stat-route
-        uri: lb://workflow-service
-        order: 1
-        predicates:
-          - Path=/api/v1/stat/**
-        filters:
-          - StripPrefix=2
+        - id: browser-route
+          uri: http://localhost:8080
+          predicates:
+              - Path=/
+        - id: token-route # 当前路由的id，保证唯一性
+          uri: lb://auth-service # lb指的是负载均衡，buy-service是nacos中的微服务名字
+          order: 1 #路由的优先级,数字越小级别越高
+          predicates:
+            - Path=/api/v1/token
+          filters: # 过滤器,请求在传递过程中可以通过过滤器对其进行一定的修改
+            - StripPrefix=2 # 转发之前去掉1层路径
+        - id: user-route # 当前路由的id，保证唯一性
+          uri: lb://auth-service # lb指的是负载均衡，buy-service是nacos中的微服务名字
+          order: 1 #路由的优先级,数字越小级别越高
+          predicates:
+            - Path=/api/v1/user/**,/api/v1/users/**
+          filters: # 过滤器,请求在传递过程中可以通过过滤器对其进行一定的修改
+            - StripPrefix=2 # 转发之前去掉1层路径
+        - id: customer-checkin-record-route
+          uri: lb://workflow-service
+          order: 1
+          predicates:
+            - Path=/api/v1/customer-checkin-record/**
+          filters:
+            - StripPrefix=2
+        - id: customer-route
+          uri: lb://workflow-service
+          order: 1
+          predicates:
+            - Path=/api/v1/customer/**,/api/v1/customers/**
+          filters:
+            - StripPrefix=2
+        - id: room-route
+          uri: lb://workflow-service
+          order: 1
+          predicates:
+            - Path=/api/v1/room/**,/api/v1/rooms/**
+          filters:
+            - StripPrefix=2
+        - id: stat-route
+          uri: lb://workflow-service
+          order: 1
+          predicates:
+            - Path=/api/v1/stat/**
+          filters:
+            - StripPrefix=2
 logging:
   level:
     root:
