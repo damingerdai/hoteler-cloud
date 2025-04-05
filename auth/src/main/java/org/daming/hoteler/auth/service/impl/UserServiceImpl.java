@@ -3,6 +3,7 @@ package org.daming.hoteler.auth.service.impl;
 import org.daming.hoteler.auth.domain.Role;
 import org.daming.hoteler.auth.domain.User;
 import org.daming.hoteler.auth.domain.enums.RoleType;
+import org.daming.hoteler.auth.domain.request.CreateUserRequest;
 import org.daming.hoteler.auth.repository.IRoleDao;
 import org.daming.hoteler.auth.repository.IUserDao;
 import org.daming.hoteler.auth.repository.IUserRoleDao;
@@ -44,12 +45,20 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     @Transactional
-    public int create(User user) {
-        var passwordService = this.passwordHelperService.getPasswordService(user.getPasswordType());
-        var encodePassword = passwordService.encodePassword(user.getPassword());
+    public int create(CreateUserRequest cur) {
+        var passwordService = this.passwordHelperService.getPasswordService(cur.getPasswordType());
+        var encodePassword = passwordService.encodePassword(cur.getPassword());
+        var user = new User();
+        user.setUsername(cur.getUsername());
+        user.setFirstName(cur.getFirstName());
+        user.setLastName(cur.getLastName());
         user.setPassword(encodePassword);
+        user.setPasswordType(cur.getPasswordType());
         var id = this.userDao.create(user);
-        this.userRoleDao.create(id, RoleType.User.id());
+        var roleName = cur.getRole();
+        var roleOptional = this.roleService.getRoleByName(roleName);
+        var role = roleOptional.orElseThrow();
+        this.userRoleDao.create(id, role.getId());
         return id;
     }
 
@@ -76,11 +85,12 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public void update(User user) {
-        var passwordService = this.passwordHelperService.getPasswordService(user.getPasswordType());
-        var encodePassword = passwordService.encodePassword(user.getPassword());
-        user.setPassword(encodePassword);
+    @Transactional
+    public User update(User user) {
+
         this.userDao.update(user);
+
+        return user;
     }
 
     @Override

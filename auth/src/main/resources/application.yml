@@ -6,9 +6,9 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 192.168.31.220:8848
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/hoteler?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://192.168.31.220:3306/hoteler?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -34,7 +34,7 @@ management:
       details: always
 springdoc:
   version: '@springdoc.version@'
-  show-actuator: true
+  show-actuator: false
   swagger-ui:
     path=/swagger-ui:
       html:

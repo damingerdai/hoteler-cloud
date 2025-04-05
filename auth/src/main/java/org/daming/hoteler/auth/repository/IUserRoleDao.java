@@ -8,5 +8,5 @@ import org.daming.hoteler.common.exceptions.HotelerException;
  */
 public interface IUserRoleDao {
 
-    int create(int userId, int roleId) throws HotelerException;
+    int create(int userId, long roleId) throws HotelerException;
 }

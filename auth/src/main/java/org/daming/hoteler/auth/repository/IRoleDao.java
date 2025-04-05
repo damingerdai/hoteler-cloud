@@ -16,5 +16,7 @@ public interface IRoleDao {
 
     Optional<Role> get(long id) throws HotelerException;
 
+    Optional<Role> getRoleByName(String roleName) throws HotelerException;
+
     List<Role> listByUserId(int userId) throws HotelerException;
 }

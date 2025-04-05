@@ -4,6 +4,7 @@ import org.daming.hoteler.auth.domain.Role;
 import org.daming.hoteler.common.exceptions.HotelerException;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author gming001
@@ -14,4 +15,6 @@ public interface IRoleService {
     List<Role> list() throws HotelerException;
 
     List<Role> listByUserId(int userId) throws HotelerException;
+
+    Optional<Role> getRoleByName(String roleName) throws HotelerException;
 }

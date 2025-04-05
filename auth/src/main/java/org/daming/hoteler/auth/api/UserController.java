@@ -2,6 +2,7 @@ package org.daming.hoteler.auth.api;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.daming.hoteler.auth.domain.User;
+import org.daming.hoteler.auth.domain.request.CreateUserRequest;
 import org.daming.hoteler.auth.service.ITokenService;
 import org.daming.hoteler.auth.service.IUserService;
 import org.daming.hoteler.common.errors.IErrorService;
@@ -27,9 +28,9 @@ public class UserController {
     private final IErrorService errorService;
 
     @PostMapping("")
-    public DataResponse<User> create(@RequestBody User user) {
-        var id  = this.userService.create(user);
-        user.setId(id);
+    public DataResponse<User> create(@RequestBody CreateUserRequest cur) {
+        var id  = this.userService.create(cur);
+        var user = this.userService.get(id);
         user.setPassword(null);
         user.setPasswordType(null);
 
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public DataResponse<User>  get(@PathVariable int id) {
+    public DataResponse<User> get(@PathVariable int id) {
         var user = this.userService.get(id);
 //        user.setPassword(null);
 //        user.setPasswordType(null);
@@ -76,7 +77,7 @@ public class UserController {
     public DataResponse<User> update(@RequestBody User user) {
         this.userService.update(user);
 
-        return new DataResponse<>(user);
+        return new DataResponse<>(null);
     }
 
     @DeleteMapping("/{id}")

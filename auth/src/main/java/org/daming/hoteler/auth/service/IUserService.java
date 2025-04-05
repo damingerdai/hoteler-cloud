@@ -1,6 +1,7 @@
 package org.daming.hoteler.auth.service;
 
 import org.daming.hoteler.auth.domain.User;
+import org.daming.hoteler.auth.domain.request.CreateUserRequest;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
  */
 public interface IUserService {
 
-    int create(User user);
+    int create(CreateUserRequest user);
 
     User get(int id);
 
     User getUserByUsername(String username);
 
-    void update(User user);
+    User update(User user);
 
     void delete(int id);
 

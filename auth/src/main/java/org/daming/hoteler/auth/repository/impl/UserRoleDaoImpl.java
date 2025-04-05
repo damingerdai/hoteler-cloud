@@ -16,16 +16,16 @@ import java.util.Objects;
 @Repository
 public class UserRoleDaoImpl implements IUserRoleDao {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public int create(int userId, int roleId) throws HotelerException {
+    public int create(int userId, long roleId) throws HotelerException {
         var statement = "INSERT INTO user_roles (user_id, role_id, create_dt, create_user) VALUE (?, ?, now(), 'system')";
         var keyHolder = new GeneratedKeyHolder();
         this.jdbcTemplate.update(con -> {
             var ps = con.prepareStatement(statement, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, userId);
-            ps.setInt(2, roleId);
+            ps.setLong(2, roleId);
             return ps;
         }, keyHolder);
         return Objects.requireNonNull(keyHolder.getKey()).intValue();

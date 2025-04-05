@@ -36,6 +36,14 @@ public class RoleDaoImpl implements IRoleDao {
     }
 
     @Override
+    public Optional<Role> getRoleByName(String roleName) throws HotelerException {
+        var statement = "SELECT id, name, description FROM roles WHERE name = ? AND deleted_at IS NULL";
+        var role =  this.jdbcTemplate.query(statement, this::extractData, roleName);
+
+        return Optional.ofNullable(role);
+    }
+
+    @Override
     public List<Role> listByUserId(int userId) throws HotelerException {
         var statement = """
            SELECT r.id AS id, r.name AS name, r.description AS description FROM roles r
