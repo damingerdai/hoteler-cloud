@@ -24,7 +24,7 @@ services:
       - hoteler-network
 
   postgres:
-    image: postgres:17.2-alpine3.20
+    image: postgres:17.5-alpine3.20
     container_name: hoteler-postgres-17
     ports:
       - 5432:5432
