@@ -56,7 +56,7 @@ services:
     networks:
       - hoteler-network
   bytebase:
-    image: bytebase/bytebase:3.5.1
+    image: bytebase/bytebase:3.7.0
     container_name: hoteler-bytebase-3
     restart: always
     ports:
