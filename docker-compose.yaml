@@ -40,7 +40,7 @@ services:
     networks:
       - hoteler-network
   nacos:
-    image: qingpan/rnacos:v0.6.14
+    image: qingpan/rnacos:v0.6.18
     container_name: hoteler-qingpan-nacos
     ports:
       - "8848:8848"
