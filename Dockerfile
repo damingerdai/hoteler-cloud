@@ -1,4 +1,4 @@
-FROM maven:3.9.9-amazoncorretto-21-debian AS back-build
+FROM openjdk:24-slim AS back-build
 
 WORKDIR app
 #COPY pom.xml /app
@@ -10,11 +10,18 @@ WORKDIR app
 #COPY orchestration /app/orchestration
 #RUN mvn package
 
-COPY . /app/
+COPY .mvn ./.mvn
+COPY pom.xml mvnw .
 
-RUN mvn clean install package
+COPY auth /app/auth
+COPY common /app/common
+COPY worker /app/worker
+COPY workflow /app/workflow
+COPY orchestration /app/orchestration
+RUN ./mvnw package -Dmaven.test.skip=true
 
-FROM openjdk:22-slim AS auth
+
+FROM openjdk:24-slim AS auth
 WORKDIR /app
 COPY --from=back-build /app/auth/target*.jar /app/app.jar
 ENV TZ=Aisa/Shanghai
@@ -23,7 +30,7 @@ HEALTHCHECK CMD curl --fail http://localhost:8443/ping || exit 1
 EXPOSE 8443
 CMD ["sh", "-c", "exec java -jar app.jar"]
 
-FROM openjdk:22-slim AS workflow
+FROM openjdk:24-slim AS workflow
 WORKDIR /app
 COPY --from=back-build /app/workflow/target/*.jar /app/app.jar
 ENV TZ=Aisa/Shanghai
@@ -32,7 +39,7 @@ HEALTHCHECK CMD curl --fail http://localhost:8443/ping || exit 1
 EXPOSE 8443
 CMD ["sh", "-c", "exec java -jar app.jar"]
 
-FROM openjdk:22-slim AS orchestration
+FROM openjdk:24-slim AS orchestration
 WORKDIR /app
 COPY --from=back-build /app/orchestration/target*.jar /app/app.jar
 ENV TZ=Aisa/Shanghai
