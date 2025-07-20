@@ -19,5 +19,5 @@ for target in $targets; do
   targetImageName="damingerdai/$target"
 
   # 构建 target 镜像
-  docker build -t $targetImageName:${sha} -f Dockerfile --build-arg target=$target . || { echo "目标镜像 $targetImageName:${sha} 构建失败"; exit 1;
+  docker build -t $targetImageName:${sha} -f Dockerfile --build-arg target=$target . || { echo "目标镜像 $targetImageName:${sha} 构建失败"; exit 1; }
 done
