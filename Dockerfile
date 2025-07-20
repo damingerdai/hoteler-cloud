@@ -18,7 +18,7 @@ COPY common /app/common
 COPY worker /app/worker
 COPY workflow /app/workflow
 COPY orchestration /app/orchestration
-RUN ./mvnw package -Dmaven.test.skip=true
+RUN ./mvnw package -Dmaven.test.skip=true -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true
 
 
 FROM openjdk:24-slim AS auth
