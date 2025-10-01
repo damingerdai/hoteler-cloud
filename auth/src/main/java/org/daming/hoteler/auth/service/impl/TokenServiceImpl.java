@@ -4,6 +4,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import org.daming.hoteler.common.domain.UserToken;
 import org.daming.hoteler.common.errors.IErrorService;
 import org.daming.hoteler.common.exceptions.HotelerException;
+import org.daming.hoteler.common.logger.LoggerManager;
 import org.daming.hoteler.common.utils.CommonUtils;
 import org.daming.hoteler.common.utils.JwtUtil;
 import org.daming.hoteler.security.service.IPasswordService;
@@ -40,6 +41,7 @@ public class TokenServiceImpl implements ITokenService, ApplicationContextAware 
             throw this.errorService.createHotelerException(600005);
         }
         if (this.userService.isAccountLocked(user)) {
+            LoggerManager.getCommonLogger().error("user {} is locked", user);
             throw this.errorService.createHotelerException(600014);
         }
         var passwordType = CommonUtils.isNotEmpty(user.getPasswordType()) ? user.getPasswordType() : "noop";

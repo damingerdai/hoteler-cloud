@@ -29,6 +29,9 @@ public class UserController {
 
     @PostMapping("")
     public DataResponse<User> create(@RequestBody CreateUserRequest cur) {
+        if (Objects.isNull(cur.getPasswordType())) {
+            cur.setPasswordType("noop");
+        }
         var id  = this.userService.create(cur);
         var user = this.userService.get(id);
         user.setPassword(null);

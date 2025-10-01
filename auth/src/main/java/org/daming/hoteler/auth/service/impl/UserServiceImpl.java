@@ -54,10 +54,11 @@ public class UserServiceImpl implements IUserService {
         user.setLastName(cur.getLastName());
         user.setPassword(encodePassword);
         user.setPasswordType(cur.getPasswordType());
+        user.setAccountNonLocked(true);
         var id = this.userDao.create(user);
         var roleName = cur.getRole();
         var roleOptional = this.roleService.getRoleByName(roleName);
-        var role = roleOptional.orElseThrow();
+        var role = roleOptional.orElseGet(() -> this.roleService.getRoleByName("users").orElseThrow());
         this.userRoleDao.create(id, role.getId());
         return id;
     }
