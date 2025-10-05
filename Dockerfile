@@ -1,4 +1,4 @@
-FROM openjdk:24-slim AS back-build
+FROM openjdk:25-slim AS back-build
 
 WORKDIR app
 #COPY pom.xml /app
