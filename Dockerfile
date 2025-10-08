@@ -21,7 +21,7 @@ COPY orchestration /app/orchestration
 RUN ./mvnw package -Dmaven.test.skip=true -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true
 
 
-FROM openjdk:24-slim AS auth
+FROM openjdk:25-slim AS auth
 WORKDIR /app
 COPY --from=back-build /app/auth/target*.jar /app/app.jar
 ENV TZ=Aisa/Shanghai
@@ -30,7 +30,7 @@ HEALTHCHECK CMD curl --fail http://localhost:8443/ping || exit 1
 EXPOSE 8443
 CMD ["sh", "-c", "exec java -jar app.jar"]
 
-FROM openjdk:24-slim AS workflow
+FROM openjdk:25-slim AS workflow
 WORKDIR /app
 COPY --from=back-build /app/workflow/target/*.jar /app/app.jar
 ENV TZ=Aisa/Shanghai
@@ -39,7 +39,7 @@ HEALTHCHECK CMD curl --fail http://localhost:8443/ping || exit 1
 EXPOSE 8443
 CMD ["sh", "-c", "exec java -jar app.jar"]
 
-FROM openjdk:24-slim AS orchestration
+FROM openjdk:25-slim AS orchestration
 WORKDIR /app
 COPY --from=back-build /app/orchestration/target*.jar /app/app.jar
 ENV TZ=Aisa/Shanghai
