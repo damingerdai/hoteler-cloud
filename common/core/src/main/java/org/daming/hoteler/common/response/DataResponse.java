@@ -31,7 +31,7 @@ public class DataResponse<T> extends CommonResponse {
     public String toString() {
         return new StringJoiner(", ", DataResponse.class.getSimpleName() + "[", "]")
                 .add("data=" + data)
-                .add("status" + this.getStatus())
+                .add("status=" + this.getStatus())
                 .toString();
     }
 }
