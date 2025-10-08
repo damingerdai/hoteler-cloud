@@ -30,13 +30,11 @@ public class AuthReactiveUserDetailsService implements ReactiveUserDetailsServic
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         var response = this.restTemplate.getForEntity("http://auth-service/user?username=" + username, DataResponse.class).getBody();
         var user = (User) response.getData();
-        System.out.println(user);
         return user;
     }
 
     @Override
     public Mono<UserDetails> findByUsername(String username) {
-        System.out.println("username" + username);
         var response = this.webClient.get()
                 .uri("http://auth-service/user?username=" + username)
                 .accept(MediaType.APPLICATION_JSON)
@@ -44,8 +42,7 @@ public class AuthReactiveUserDetailsService implements ReactiveUserDetailsServic
                 .bodyToMono(new ParameterizedTypeReference<DataResponse<User>>() {
                 });
         //.bodyToMono(Map.class);
-        var user = response.map(res -> (UserDetails) res.getData());
-        return user;
+        return response.map(res -> (UserDetails) res.getData());
     }
 
 
