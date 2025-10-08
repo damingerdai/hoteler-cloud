@@ -12,7 +12,7 @@
     <artifactId>hoteler.common.core</artifactId>
 
     <properties>
-        <jsonwebtoken.versiom>0.12.6</jsonwebtoken.versiom>
+        <jsonwebtoken.versiom>0.13.0</jsonwebtoken.versiom>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
