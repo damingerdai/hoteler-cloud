@@ -73,7 +73,7 @@ spring:
               uri: lb://workflow-service
               predicates:
                 - Path=/workflow/v3/api-docs
-              filters:
+              /filters:
               - StripPrefix=1
 logging:
   level:
