@@ -41,6 +41,8 @@ public class WebFluxSecurityConfig {
                 .authorizeExchange(exchanges ->
                         exchanges.pathMatchers("/login").permitAll()
                                 .pathMatchers("/api/v1/token").permitAll()
+                                .pathMatchers("swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                                .pathMatchers( "/*/v3/api-docs/**").permitAll()
                                 .pathMatchers(HttpMethod.POST, "/api/v1/user").permitAll()
                         .anyExchange().authenticated()
                 )
