@@ -63,7 +63,27 @@ spring:
                 - Path=/api/v1/stat/**
               filters:
                 - StripPrefix=2
+            - id: auth-docs
+              uri: lb://auth-service
+              predicates:
+                - Path=/auth/v3/api-docs
+              filters:
+                - StripPrefix=1
+            - id: workflow-docs
+              uri: lb://workflow-service
+              predicates:
+                - Path=/workflow/v3/api-docs
+              /filters:
+              - StripPrefix=1
 logging:
   level:
     root:
       info
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: Auth Service
+        url: /auth/v3/api-docs
+      - name: Workflow Service
+        url: /workflow/v3/api-docs
