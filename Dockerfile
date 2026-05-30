@@ -1,4 +1,4 @@
-FROM azul/zulu-openjdk:25.0.1-jdk AS back-build
+FROM azul/zulu-openjdk:25.0.3-jdk AS back-build
 
 WORKDIR app
 #COPY pom.xml /app
@@ -21,7 +21,7 @@ COPY orchestration /app/orchestration
 RUN ./mvnw package -Dmaven.test.skip=true -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true
 
 
-FROM azul/zulu-openjdk:25.0.1-jdk AS auth
+FROM azul/zulu-openjdk:25.0.3-jdk AS auth
 WORKDIR /app
 COPY --from=back-build /app/auth/target*.jar /app/app.jar
 ENV TZ=Aisa/Shanghai
@@ -30,7 +30,7 @@ HEALTHCHECK CMD curl --fail http://localhost:8443/ping || exit 1
 EXPOSE 8443
 CMD ["sh", "-c", "exec java -jar app.jar"]
 
-FROM azul/zulu-openjdk:25.0.1-jdk AS workflow
+FROM azul/zulu-openjdk:25.0.3-jdk AS workflow
 WORKDIR /app
 COPY --from=back-build /app/workflow/target/*.jar /app/app.jar
 ENV TZ=Aisa/Shanghai
@@ -39,7 +39,7 @@ HEALTHCHECK CMD curl --fail http://localhost:8443/ping || exit 1
 EXPOSE 8443
 CMD ["sh", "-c", "exec java -jar app.jar"]
 
-FROM azul/zulu-openjdk:25.0.1-jdk AS orchestration
+FROM azul/zulu-openjdk:25.0.3-jdk AS orchestration
 WORKDIR /app
 COPY --from=back-build /app/orchestration/target*.jar /app/app.jar
 ENV TZ=Aisa/Shanghai
