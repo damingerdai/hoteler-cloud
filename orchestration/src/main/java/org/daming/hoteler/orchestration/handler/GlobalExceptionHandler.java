@@ -1,10 +1,9 @@
 package org.daming.hoteler.orchestration.handler;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
+import org.springframework.boot.webflux.error.ErrorWebExceptionHandler;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.http.MediaType;
@@ -12,6 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import tools.jackson.databind.ObjectMapper;
+
 
 /**
  * 网关异常通用处理器，只作用在webflux 环境下 , 优先级低于 {@link ResponseStatusExceptionHandler} 执行
@@ -21,7 +22,7 @@ import reactor.core.publisher.Mono;
  */
 @Component
 @Order(-1)
-public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
+public class GlobalExceptionHandler implements ErrorWebExceptionHandler  {
 
     private final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
@@ -42,14 +43,8 @@ public class GlobalExceptionHandler implements ErrorWebExceptionHandler {
 
         return response.writeWith(Mono.fromSupplier(() -> {
             DataBufferFactory bufferFactory = response.bufferFactory();
-            try {
-                this.logger.warn("Error Spring Cloud Gateway : {} {}", exchange.getRequest().getPath(), ex.getMessage(), ex);
-                return bufferFactory.wrap(objectMapper.writeValueAsBytes(ex.getMessage()));
-            }
-            catch (JsonProcessingException e) {
-                this.logger.error("Error writing response", ex);
-                return bufferFactory.wrap(new byte[0]);
-            }
+            this.logger.warn("Error Spring Cloud Gateway : {} {}", exchange.getRequest().getPath(), ex.getMessage(), ex);
+            return bufferFactory.wrap(objectMapper.writeValueAsBytes(ex.getMessage()));
         }));
     }
 
