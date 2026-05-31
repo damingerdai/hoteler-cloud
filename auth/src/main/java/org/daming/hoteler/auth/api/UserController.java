@@ -1,5 +1,8 @@
 package org.daming.hoteler.auth.api;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.daming.hoteler.auth.domain.User;
 import org.daming.hoteler.auth.domain.request.CreateUserRequest;
@@ -50,7 +53,8 @@ public class UserController {
     }
 
     @GetMapping("")
-    public DataResponse<User> get(@RequestHeader(value = "Authorization", required = false) String authorization, @RequestParam(required = false) String username) throws HotelerException {
+    @Operation(summary = "fetch user",security = { @SecurityRequirement(name = "bearer-key") })
+    public DataResponse<User> get(@Parameter(hidden = true) @RequestHeader(value = "Authorization", required = false) String authorization, @RequestParam(required = false) String username) throws HotelerException {
         try {
             if (Objects.nonNull(authorization)) {
                 var token = authorization.split("Bearer ")[1];

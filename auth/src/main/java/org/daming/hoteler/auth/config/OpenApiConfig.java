@@ -45,7 +45,7 @@ public class OpenApiConfig {
     }
 
     private Components components() {
-        return new Components();
-                //.addSecuritySchemes("bearer-key", new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"));
+        return new Components()
+                .addSecuritySchemes("bearer-key", new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"));
     }
 }
