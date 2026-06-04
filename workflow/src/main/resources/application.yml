@@ -4,7 +4,7 @@ spring:
   application:
     name: workflow-service
   datasource:
-    url: jdbc:postgresql://192.168.31.220:5432/hoteler
+    url: jdbc:postgresql://localhost:5432/hoteler
     username: postgres
     password: 123456
     driver-class-name: org.postgresql.Driver
@@ -13,7 +13,7 @@ spring:
       enabled: false
     nacos:
       discovery:
-        server-addr: 192.168.31.220:8848
+        server-addr: localhost:8848
   flyway:
     skip-executing-migrations: true
 logging:
