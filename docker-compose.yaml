@@ -35,8 +35,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: postgres
-      TZ: 'GMT+8'
-      PGTZ: 'GMT+8'
+      TZ: Asia/Shanghai
+      PGTZ: Asia/Shanghai
     networks:
       - hoteler-network
   nacos:
@@ -64,7 +64,10 @@ services:
     # # Uncomment the following lines to persist data
     volumes:
        - hoteler-bytebase-volume:/var/opt/bytebase
-    command: [ "--data", "/var/opt/bytebase", "--port", "5678", "--pg", "postgresql://postgres:123456@postgres:5432/bytebase?sslmode=disable" ]
+    command: [ "--data", "/var/opt/bytebase", "--port", "5678" ]
+    environment:
+      - PG_URL=postgresql://postgres:123456@postgres:5432/bytebase?sslmode=disable
+      - TZ=Asia/Shanghai
     depends_on:
       - postgres
     networks:
