@@ -15,7 +15,6 @@ import reactor.core.publisher.Mono;
 @Service
 public class AuthReactiveUserDetailsService implements ReactiveUserDetailsService {
 
-
     private final RestTemplate restTemplate;
 
     private final WebClient webClient;

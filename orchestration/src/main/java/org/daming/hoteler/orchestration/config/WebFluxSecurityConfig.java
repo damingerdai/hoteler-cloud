@@ -35,7 +35,6 @@ public class WebFluxSecurityConfig {
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         var authenticationWebFilter = new AuthenticationWebFilter(jwtAuthenticationManager);
         authenticationWebFilter.setServerAuthenticationConverter(this.createEnhancedAuthenticationConverter());
-        // authenticationWebFilter.setServerAuthenticationConverter(new ServerBearerTokenAuthenticationConverter());
         http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchanges ->
