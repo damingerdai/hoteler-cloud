@@ -1,6 +1,6 @@
 services:
   mysql:
-    image: mysql:9.7.0
+    image: mysql:9.7.1
     container_name: mysql-9
     volumes:
       - hoteler-mysql-volume:/var/lib/mysql
